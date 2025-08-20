@@ -1,0 +1,18 @@
+@startuml patient_data_handler
+
+!$myVar = 2
+
+start
+:A$myVar - Get Therapeutic Plan;
+
+:l$myVar : Therapeutic Plan;
+
+:        <<datastore>>\n l$myVar : Daily Activity Data\n{1..*};
+
+
+
+end
+
+:        <<datastore>>\n l$myVar : Daily Activity Data\n{1..*}; --> :A$myVar - Get Therapeutic Plan;
+
+@enduml

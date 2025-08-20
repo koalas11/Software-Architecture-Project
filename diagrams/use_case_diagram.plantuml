@@ -1,0 +1,118 @@
+@startuml usecase_diagram
+!theme cerulean-outline
+left to right direction
+
+' Primary Actors
+actor Patient #87CEEB
+actor "Attending Physician" as AttendingPhysician #90EE90
+actor "On-Call Physician" as OnCallPhysician #FFB6C1
+
+' Secondary Actors
+actor "Physiological Sensor" as PhysiologicalSensors #D3D3D3
+actor "Daily Activity Tracking Platform" as DailyActivityTrackingPlatform #D3D3D3
+actor "Ambulance" as Emergency #FF6B6B
+actor "Hospital" as Hospital #FFB6C1
+
+' Actor position notes
+note bottom of Patient : <<location>>\nAddress
+note bottom of AttendingPhysician : <<location>>\nHealthcare facility
+note bottom of OnCallPhysician : <<location>>\nHealthcare facility
+note top of PhysiologicalSensors : Sensors that automatically\n sends data to the system\n <<location>>\nPatient
+note top of DailyActivityTrackingPlatform : Platform for tracking daily activities\nthat automatically sends data to the system
+note bottom of Emergency : <<location>>\nGPS
+note bottom of Hospital : <<location>>\nAddress
+
+rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5F5DC {
+  
+  ' Patient Use Cases - Patient interacts with system
+  together {
+    (Manually Send Physiological Data) #E6F3FF
+    (View Therapeutic Plan) #E6F3FF
+
+    Patient --> (Manually Send Physiological Data)
+    Patient --> (View Therapeutic Plan)
+  }
+  
+  ' Attending Physician Use Cases
+  together {
+    (Define Therapeutic Plan) #E6FFE6
+    (Modify Therapeutic Plan) #E6FFE6
+    (Confirm Phone Call to Patient)  #E6FFE6
+    (View Patient Medical Records) #E6FFE6
+    (Send Threshold Alerts and Patient Number) #E6FFE6
+    AttendingPhysician --> (Define Therapeutic Plan)
+    AttendingPhysician --> (Modify Therapeutic Plan)
+    AttendingPhysician --> (Confirm Phone Call to Patient)
+    AttendingPhysician --> (View Patient Medical Records)
+    AttendingPhysician <-- (Send Threshold Alerts and Patient Number)
+  }
+  
+  
+
+  ' On-Call Physician Use Cases
+  together {
+    (Send Diagnostic Information) #FFE4FF
+    (Send Patient Health Information) #FFE4FF
+    (Send Patient Address and Medical Records) #FFE4FF
+
+    OnCallPhysician --> (Send Diagnostic Information)
+    OnCallPhysician --> (Send Patient Health Information)
+  }
+  
+  OnCallPhysician <-- (Send Patient Address and Medical Records)
+
+    (Identify Ambulance and Hospital) #FFE4E1
+
+  together {
+    ' Emergency Services Use Cases
+    (Send Emergency Alert To Ambulance) #FFE4E1
+    (Send Emergency Alert To Hospital) #FFE4E1
+
+    ' Sensor Use Cases
+    (Acquire Daily Activity Data) #F0F0F0
+
+    (Acquire Physiological Data) #F0F0F0
+  }
+
+  (Acquire Physiological Data) <-- PhysiologicalSensors
+
+  ' System Internal Use Cases
+  usecase MainSystemCase #FFE4E1 as "Patient Data Handler
+  --
+  <b><<extension point>>
+  Send Threshold Alerts and Patient Number
+  Identify On-Call Physician
+  Identify Ambulance and Hospital
+  "
+
+  (Identify On-Call Physician) #FFE4FF
+
+  ' System Internal Relationships
+  (Manually Send Physiological Data) ..> MainSystemCase : <<includes>>
+  MainSystemCase <..  (Acquire Physiological Data) : <<includes>>
+  (Send Threshold Alerts and Patient Number) ..> MainSystemCase: <<extends>>\n[Threshold Exceeded]
+  (Identify On-Call Physician) ..> MainSystemCase : <<extends>>\n[Anomaly Detected]
+  MainSystemCase <..  (Identify Ambulance and Hospital) : <<extends>>\n[Red Code]
+  (Identify Ambulance and Hospital) ..>  (Send Emergency Alert To Ambulance) : <<include>>
+  (Identify Ambulance and Hospital) ..>  (Send Emergency Alert To Hospital) : <<include>>
+  MainSystemCase <..  (Acquire Daily Activity Data) : <<includes>>
+  
+  (Acquire Daily Activity Data) <-- DailyActivityTrackingPlatform
+  (Send Emergency Alert To Ambulance) --> Emergency
+  (Send Emergency Alert To Hospital) --> Hospital
+
+  (Send Patient Address and Medical Records) <.. (Identify On-Call Physician) : <<includes>>
+
+  ' Explanatory notes for key system features
+  note bottom of MainSystemCase : Process Patient Data to store the data and check\n for anomalies, trigger alerts \nand red code emergencies
+
+  (Verify Exercise Compliance) #E6FFE6
+
+  note top of (Verify Exercise Compliance) : <<note>>\nPerformed at end of each day
+
+  (Modify Therapeutic Plan) <.. (Update Sensors Frequencies) : <<extends>>\n[Modified Frequencies]
+  (Define Therapeutic Plan) ..> (Update Sensors Frequencies) : <<includes>>
+  (Update Sensors Frequencies) --> (PhysiologicalSensors)
+}
+
+@enduml

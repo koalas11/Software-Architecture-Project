@@ -1,0 +1,20 @@
+@startuml verify_exercise_compliance
+
+!$myVar = 1
+
+:   <<datastore>>\n l$myVar : In System;
+goto ok
+
+start
+:A$myVar - Verify Exercise Compliance; <<acceptEvent>> 
+
+label ok
+: Get Patient Therapeutic Plan;
+: Get Patient Data;
+
+
+
+
+end
+
+@enduml

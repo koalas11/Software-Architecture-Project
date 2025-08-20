@@ -1,0 +1,140 @@
+@startuml data_diagram
+' Class diagram for the problem architecture (WHAT)
+
+class Patient {
+  +name
+  +contactInfo
+}
+
+class "Medical Record" as MedicalRecord {
+  +history
+  +medications
+  +allergies
+  +notes
+}
+
+class "Therapeutic Plan" as TherapeuticPlan {
+  +exercises
+  +schedule
+}
+
+class "Patient Data" as PatientData {
+  +type
+  +parameters
+}
+
+class "Physiological Data" as PhysiologicalData {
+
+}
+
+class "Daily Activity Data" as DailyActivityData {
+
+}
+
+class Physician {
+  +contactInfo
+}
+
+class AttendingPhysician {
+}
+
+class OnCallPhysician {
+}
+
+class HealthcareFacility {
+  +name
+  +location
+}
+
+class Hospital {
+}
+
+class Ambulance {
+
+}
+
+class Alert {
+}
+
+class RedTypeAlert {
+
+}
+
+class AnomalyDetectedAlert {
+
+}
+
+class ThresholdAlert {
+
+}
+
+RedTypeAlert --> Alert
+AnomalyDetectedAlert --> Alert
+ThresholdAlert --> Alert
+
+class Anomaly {
+
+}
+
+
+class Location {
+
+}
+
+class Address {
+  +street
+  +city
+  +state
+  +zip
+}
+
+class GPS {
+  +latitude
+  +longitude
+}
+
+class "Physiological Sensors" as PhysiologicalSensors {
+  +type
+  +frequency
+}
+
+class Threshold {
+  +parameter
+  +range
+}
+
+Threshold "*" -- "1" TherapeuticPlan
+TherapeuticPlan "1" -- "*" DailyActivityData
+TherapeuticPlan "1" -- "*" PhysiologicalSensors
+PhysiologicalSensors "1" -- "*" PhysiologicalData
+
+Address --> Location
+GPS --> Location
+
+HealthcareFacility "1" -- "1" Address
+Ambulance "1" -- "1" GPS
+Patient "1" -- "1" Address
+
+AnomalyDetectedAlert "1" -- "1" Anomaly
+
+' Relationships
+Patient "1" -- "1" MedicalRecord
+Patient "1" -- "1" TherapeuticPlan
+Patient "1" -- "*" PatientData
+
+TherapeuticPlan "1" -- "1" AttendingPhysician
+
+Hospital --> HealthcareFacility
+
+Physician "1" -- "1" HealthcareFacility
+
+AttendingPhysician --> Physician
+OnCallPhysician --> Physician
+
+PhysiologicalData --> PatientData
+DailyActivityData --> PatientData
+
+Alert "*" -- "1" Patient
+
+
+@enduml

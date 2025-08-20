@@ -1,0 +1,12 @@
+@startuml send_physiological_data
+
+!$myVar = 1
+
+start
+:A$myVar - Store Data;
+
+:   <<datastore>>\n l$myVar : In System;
+
+end
+
+@enduml

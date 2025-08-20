@@ -1,0 +1,24 @@
+@startuml acquire_daily_activity_data
+
+skinparam RoundCorner<<rect>> 0
+
+!$num = 1
+
+start
+:A$num - Acquire Daily Activity Data; <<acceptEvent>>
+
+: l$num : Daily Activity Data;<<rect>>
+
+:        <<buffer>>\n l$num.1 : Daily Activity Data\n           {1..*};<<rect>>
+
+split
+
+
+
+end 
+
+note right
+Patient Data Handler
+end note
+
+@enduml

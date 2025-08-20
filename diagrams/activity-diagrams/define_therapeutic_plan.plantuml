@@ -1,0 +1,14 @@
+@startuml modify_therapeutic_plan
+
+!$myVar = 2
+
+start
+:A$myVar - Get Therapeutic Plan; <<acceptEvent>>
+
+:l$myVar : Therapeutic Plan;
+
+:        <<datastore>>\n l$myVar : Daily Activity Data\n{1..*};
+
+end
+
+@enduml

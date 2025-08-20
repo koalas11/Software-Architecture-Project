@@ -1,0 +1,18 @@
+@startuml acquire_physiological_data
+
+!$num = 1
+
+start
+:A$num - Acquire Physiological Data; <<acceptEvent>>
+
+: l$num : Physiological Data;<<rect>>
+
+:        <<buffer>>\n l$num.1 : Physiological Data\n{1..*};
+
+stop 
+
+note right
+Patient Data Handler
+end note
+
+@enduml

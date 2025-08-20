@@ -1,0 +1,7 @@
+{
+    "editor.wordWrap": "on",
+    "plantuml.exportFormat": "png",
+    "plantuml.diagramsRoot": "diagrams",
+    "plantuml.exportOutDir": "diagrams_out",
+    "plantuml.jar": "external/plantuml.jar"
+}
