@@ -1,0 +1,47 @@
+@startuml define_therapeutic_plan
+
+!$num = 1
+
+floating note
+<<complexity>>
+medium
+----
+<<frequency>>
+100/sec
+end note
+
+' mi arriva segnale con paziente e dati paziente da handle data
+' trovare indirizzo paziente
+' trovare healthcare più vicina
+' trovare aznalubma più vicina
+' comunicare ad ambulanza redcode alert
+' comunicare ad ospedale redcode alert
+
+start
+:A$num - Identify Hospital and Ambulance; <<input>>
+:I$num : Patient; <<task>>
+!$num = $num + 1
+
+:A$num - Get patient address;
+:\t<<datastore>>\n I$num.1 : Address\n{1..*}; <<task>>
+:I$num : Address; <<task>>
+!$num = $num + 1
+fork
+
+  :A$num - Find nearest healthcare facility;
+  :\t<<datastore>>\n I$num.1 : Hospital\n{1..*}; <<task>>
+  :I$num : Hospital; <<task>>
+  !$num = $num + 1
+
+  :A$num - Notify hospital about redcode alert; <<output>>
+  !$num = $num + 1
+fork again
+  :A$num - Find nearest available ambulance;
+  :\t<<datastore>>\n I$num.1 : Ambulance\n{1..*}; <<task>>
+  :I$num : Ambulance; <<task>>
+  !$num = $num + 1
+  :A$num - Notify ambulance about redcode alert; <<output>>
+end fork
+
+stop
+@enduml

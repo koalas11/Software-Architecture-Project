@@ -1,0 +1,51 @@
+@startuml define_therapeutic_plan
+
+!$num = 1
+
+floating note
+<<complexity>>
+medium
+----
+<<frequency>>
+100/sec
+end note
+
+' mi arriva segnale con paziente da handle data
+' trovare healthcare più vicina
+' trovare on call di turno
+' trovare indirizzo paziente (ricevero il paziente da handleData)
+' trovare medical record del paziente (ricevero il paziente da handleData)
+
+start
+:A$num - Identify On-Call Physician; <<input>>
+:I$num : Patient; <<task>>
+!$num = $num + 1
+
+fork
+  :A$num - Get patient address;
+  :\t<<datastore>>\n I$num.1 : Address\n{1..*}; <<task>>
+  :I$num : Address; <<task>>
+  !$num = $num + 1
+
+  :A$num - Find nearest healthcare facility;
+  :\t<<datastore>>\n I$num.1 : Healthcare Facility\n{1..*}; <<task>>
+  :I$num : Healthcare Facility; <<task>>
+  !$num = $num + 1
+
+  :A$num - Find available physician;
+  :\t<<datastore>>\n I$num.1 : On-Call Physician\n{1..*}; <<task>>
+  :I$num : On-Call Physician; <<task>>
+  !$num = $num + 1
+fork again
+  :A$num - Get patient medical record;
+  :\t<<datastore>>\n I$num.1 : Medical Record\n{1..*}; <<task>>
+  :I$num : Medical Record; <<task>>
+  !$num = $num + 1
+  end merge
+
+  :A$num - Notify with address and medical record;
+
+
+  stop
+
+  @enduml

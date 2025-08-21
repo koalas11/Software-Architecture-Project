@@ -1,5 +1,4 @@
-@startuml acquire_daily_activity_data
-
+@startuml acquire_physiological_data
 
 !$num = 1
 
@@ -8,27 +7,29 @@ floating note
 low
 ----
 <<frequency>>
-#npatient*5/day
+100/sec
 end note
 
+
 start
-:A$num - Acquire Daily Activity Data; <<input>>
-:I$num : Daily Activity Data; <<task>>
+:A$num - Acquire Physiological Data; <<input>>
+:I$num : Physiological Data; <<task>>
 :\t<<buffer>>
-I$num.1 : Daily Activity Data
+I$num.1 : Physiological Data
 \t{1..*}; <<task>>
 !$num = $num + 1
+
 fork
   :A$num - Store Data;
   :I$num.1 : <<datastore>>
-  Daily Activity Data; <<task>>
+  Physiological Data; <<task>>
   stop
 fork again
   :Send to HandlePatientData; <<output>>
   note left
   Patient Data Handler
   end note
-stop
+  stop
 end fork
 
 @enduml

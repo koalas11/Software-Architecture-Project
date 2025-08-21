@@ -1,0 +1,26 @@
+@startuml view_medical_records
+
+!$num = 1
+
+floating note
+<<complexity>>
+low
+----
+<<frequency>>
+100/day
+end note
+
+start
+:A$num - View medical record; <<input>>
+!$num = $num + 1
+:A$num Get Medical Record;
+:\t<<datastore>>
+I$num.1 : Medical Record
+\t{1..*}; <<task>>
+:I$num : Medical Record; <<task>>
+!$num = $num + 1
+
+:Show Medical Record; <<output>>
+
+stop
+@enduml

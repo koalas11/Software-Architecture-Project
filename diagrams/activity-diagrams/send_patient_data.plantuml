@@ -1,0 +1,25 @@
+@startuml send_patient_data
+
+!$num = 1
+
+floating note
+<<complexity>>
+low
+----
+' same as send physiological
+<<frequency>>
+100/day 
+end note
+
+start
+:A$num - Send Patient Data; <<input>>
+:I$num : Patient Data; <<task>>
+:\t<<buffer>>
+I$num.1 : Patient Data
+\t{1..*}; <<task>>
+!$num = $num + 1
+:A$num - Store Data;
+:I$num.1 : <<datastore>>
+Physiological Data; <<task>>
+stop
+@enduml

@@ -73,7 +73,7 @@ AnomalyDetectedAlert --> Alert
 ThresholdAlert --> Alert
 
 class Anomaly {
-
+  + patientCallConfirmation
 }
 
 

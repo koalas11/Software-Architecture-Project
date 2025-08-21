@@ -37,13 +37,13 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   together {
     (Define Therapeutic Plan) #E6FFE6
     (Modify Therapeutic Plan) #E6FFE6
-    (Confirm Phone Call to Patient)  #E6FFE6
-    (View Patient Medical Records) #E6FFE6
+    (Confirm Phone Call towards Patient)  #E6FFE6
+    (View Patient Medical Record) #E6FFE6
     (Send Threshold Alerts and Patient Number) #E6FFE6
     AttendingPhysician --> (Define Therapeutic Plan)
     AttendingPhysician --> (Modify Therapeutic Plan)
-    AttendingPhysician --> (Confirm Phone Call to Patient)
-    AttendingPhysician --> (View Patient Medical Records)
+    AttendingPhysician --> (Confirm Phone Call towards Patient)
+    AttendingPhysician --> (View Patient Medical Record)
     AttendingPhysician <-- (Send Threshold Alerts and Patient Number)
   }
   

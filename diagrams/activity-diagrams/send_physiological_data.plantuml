@@ -1,18 +1,34 @@
-@startuml acquire_physiological_data
+@startuml send_physiological_data
 
 !$num = 1
 
-start
-:A$num - Acquire Physiological Data; <<acceptEvent>>
-
-: l$num : Physiological Data;<<rect>>
-
-:        <<buffer>>\n l$num.1 : Physiological Data\n{1..*};
-
-stop 
-
-note right
-Patient Data Handler
+floating note
+<<complexity>>
+low
+----
+<<frequency>>
+100/day
 end note
+
+start
+:A$num - Send Physiological Data; <<input>>
+:I$num : Physiological Data; <<task>>
+:\t<<buffer>>
+I$num.1 : Physiological Data
+\t{1..*}; <<task>>
+!$num = $num + 1
+
+fork
+  :A$num - Store Data;
+  :I$num.1 : <<datastore>>
+  Physiological Data; <<task>>
+  stop
+fork again
+  :Send to HandlePatientData; <<output>>
+  note left
+  Patient Data Handler
+  end note
+  stop
+end fork
 
 @enduml

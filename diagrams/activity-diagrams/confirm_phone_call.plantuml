@@ -1,0 +1,26 @@
+@startuml confirm_phone_call
+
+!$num = 1
+
+floating note
+<<complexity>>
+low
+----
+<<frequency>>
+100/sec
+end note
+
+
+start
+:A$num - Confirm Phone Call; <<input>>
+:I$num : Anomaly; <<task>>
+!$num = $num + 1
+
+:A$num - Set confirmation;
+!$num = $num + 1
+
+:A$num - Store Data;
+:I$num.1 : <<datastore>>
+Anomaly; <<task>>
+stop
+@enduml

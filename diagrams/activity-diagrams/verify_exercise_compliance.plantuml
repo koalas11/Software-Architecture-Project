@@ -1,20 +1,42 @@
 @startuml verify_exercise_compliance
 
-!$myVar = 1
+!$num = 1
 
-:   <<datastore>>\n l$myVar : In System;
-goto ok
+floating note
+<<complexity>>
+low
+----
+<<frequency>>
+1/day
+end note
 
-start
-:A$myVar - Verify Exercise Compliance; <<acceptEvent>> 
+' cron timer every day at 00:00
+' get all patients
+' get all patients' daily activity data
+' verify
+' generate report or notify attending physician
 
-label ok
-: Get Patient Therapeutic Plan;
-: Get Patient Data;
+:\t\t\t\t\t\tCron: every day at 00:00; <<time-event>>
+:A$num - Verify exercise compliance; <<input>>
+!$num = $num + 1
+:A$num Get all Patient(s);
+:\t<<datastore>>
+I$num.1: Patient
+\t{1..*}; <<task>>
+:I$num : Patient
+\t{1..*}; <<task>>
+!$num = $num + 1
 
+:A$num Get Daily Activity;
+:\t<<datastore>>
+I$num.1: Daily Activity
+\t{1..*}; <<task>>
+:I$num : Daily Activity; <<task>>
+!$num = $num + 1
 
+:A$num - Verify activity;
+!$num = $num + 1
+:A$num - Send threshold alarm (DA RIVEDERE); <<output>>
 
-
-end
-
+stop
 @enduml

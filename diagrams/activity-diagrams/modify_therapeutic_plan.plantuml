@@ -1,18 +1,40 @@
-@startuml modify_therapeutic_plan
+@startuml define_therapeutic_plan
 
-!$myVar = 2
+!$num = 1
+
+floating note
+we assume we can update sensor at anytime
+....
+<<complexity>>
+medium
+----
+<<frequency>>
+100/sec
+end note
 
 start
-:A$myVar - Get Therapeutic Plan;
+:A$num - Get Therapeutic Plan; <<input>>
+:\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<task>>
+:I$num : Therapeutic Plan; <<task>>
+!$num = $num + 1
+:A$num - Modify therapeutic plan;
+!$num = $num + 1
 
-:l$myVar : Therapeutic Plan;
+fork
+  :A$num - Store Therapeutic Plan;
+  :\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<task>>
+fork again
+  if (Updated Physiological Sensor Frequencies?) is (yes) then
+    :\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>>
 
-:        <<datastore>>\n l$myVar : Daily Activity Data\n{1..*};
+    :Send to UpdateSensorFrequencies; <<output>>
+    note left
+    Update Sensor Handler
+    end note
+  else (no)
+  endif
+end merge
 
-
-
-end
-
-:        <<datastore>>\n l$myVar : Daily Activity Data\n{1..*}; --> :A$myVar - Get Therapeutic Plan;
+stop
 
 @enduml
