@@ -7,7 +7,10 @@
   department: [Dipartimento di Informatica, Sistemi e Comunicazione],
   course: [Corso di Scienze Informatiche],
   authors: (
-    "Sanvito Marco 886493",
+    "Andrea Falbo 887525",
+    "Damiano Pellegrini 886261",
+    "Marco Sanvito 886493",
+    "Ruben Tenderini 879290"
   ),
   bibliography: bibliography(style: "ieee", "citations.bib", full: true),
   abstract: none,
