@@ -1,4 +1,18 @@
 @startuml define_therapeutic_plan
+' <style>
+'   .input, .object, .output {
+'     BackgroundColor DodgerBlue
+'   }
+'   .datastore {
+'     BackgroundColor IndianRed
+'   }
+'   .buffer {
+'     BackgroundColor magenta
+'   }
+'   .data {
+'     BackgroundColor PaleGreen
+'   }
+' </style>
 
 !$num = 1
 
@@ -9,23 +23,24 @@ we assume we can update sensor at anytime
 medium
 ----
 <<frequency>>
-100/sec
+We assume it's the same as defining a new one
+8/hour
 end note
 
 start
 :A$num - Get Therapeutic Plan; <<input>>
-:\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<task>>
-:I$num : Therapeutic Plan; <<task>>
+:\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
+:I$num : Therapeutic Plan; <<data>> <<task>>
 !$num = $num + 1
 :A$num - Modify therapeutic plan;
 !$num = $num + 1
 
 fork
   :A$num - Store Therapeutic Plan;
-  :\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<task>>
+  :\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
 fork again
   if (Updated Physiological Sensor Frequencies?) is (yes) then
-    :\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>>
+    :\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>> <<buffer>>
 
     :Send to UpdateSensorFrequencies; <<output>>
     note left

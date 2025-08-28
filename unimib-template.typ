@@ -29,7 +29,7 @@
   helpers: (),
   keywords: (),
   // University area of education
-  area: [School of Sciences],
+  area: [School of Science],
   // University department
   department: [Department of Informatics, Systems and Communications],
   // University course

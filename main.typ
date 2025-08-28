@@ -2,10 +2,10 @@
 #import "packages.typ": codly, codly-languages
 
 #show: unimib.with(
-  title: "Progetto Architettura Del Software",
-  area: [Scuola di Scienze],
-  department: [Dipartimento di Informatica, Sistemi e Comunicazione],
-  course: [Corso di Scienze Informatiche],
+  title: "Software architecture project",
+  // area: [Scuola di Scienza],
+  // department: [Dipartimento di Informatica, Sistemi e Comunicazione],
+  // course: [Corso di Scienze Informatiche],
   authors: (
     "Andrea Falbo 887525",
     "Damiano Pellegrini 886261",

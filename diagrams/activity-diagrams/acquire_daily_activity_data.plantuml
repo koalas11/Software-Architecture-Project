@@ -8,7 +8,9 @@ floating note
 low
 ----
 <<frequency>>
-#npatient*5/day
+#npatient*18/day or
+#npatient*1/80 min or
+#npatient*1/0,0002 sec
 end note
 
 start

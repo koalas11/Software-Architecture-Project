@@ -7,7 +7,10 @@ floating note
 low
 ----
 <<frequency>>
-100/sec
+(1HR/15min + 1 BP/144min + 1OS/30min + 1Temp/120 min + 1ECG/120 min)
+
+\#npatient * 0,002/sec or
+\#npatient * 5/15min simultaneous peak
 end note
 
 

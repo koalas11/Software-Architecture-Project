@@ -9,7 +9,7 @@ we assume we can update sensor at anytime
 medium
 ----
 <<frequency>>
-100/sec
+8/hour (considering whole Lombardy)
 end note
 
 start

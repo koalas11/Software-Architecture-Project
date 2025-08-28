@@ -1,18 +1,38 @@
-@startuml patient_data_handler
+@startuml define_therapeutic_plan
 
-!$myVar = 2
+!$num = 1
+
+floating note
+we assume we can update sensor at anytime
+....
+<<complexity>>
+medium
+----
+<<frequency>>
+gets used by both acquire use cases, so
+
+\#npatient*6/15min at peak
+end note
 
 start
-:A$myVar - Get Therapeutic Plan;
 
-:l$myVar : Therapeutic Plan;
+:A$num - TODO; <<input>>
+:I$num : DATA; <<task>>
+!$num = $num + 1
+: TODO;
+: TODO;
+: TODO;
+fork
+: TODO;
+fork again
+: TODO;
+fork again
+: TODO;
+fork again
+: TODO;
+end fork
 
-:        <<datastore>>\n l$myVar : Daily Activity Data\n{1..*};
 
-
-
-end
-
-:        <<datastore>>\n l$myVar : Daily Activity Data\n{1..*}; --> :A$myVar - Get Therapeutic Plan;
+stop
 
 @enduml
