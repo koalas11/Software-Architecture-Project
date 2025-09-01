@@ -1,0 +1,94 @@
+@startuml deployment_architecture
+left to right direction
+
+node "<<device>>\n(N) Attending Physician" as Attending_Physician_1_1
+node "<<device>>\n(N) On Call Physician" as On_Call_Physician_1_1
+
+node Hospital_1 {
+    component "Alerts Handler" as AH1
+    component "Attending Physician Handler" as APH1
+    component "On Call Physician Handler" as OCPH1
+
+    component "Patient Data Handler" as PDH1 #Green
+    component "Patient Data Handler Hot Spare" as PDH1B #Gray
+    component "Verify Exercise Compliance Handler" as VECH1
+    database "Storage" as DS1 #Purple
+
+    PDH1 --> DS1 : <<use>>
+    VECH1 --> DS1 : <<use>>
+}
+
+node Edge_1_1 {
+    component "Sensors and Data Handler" as SDH1 #Green
+    component "Patient Handler" as PH1 #Green
+}
+
+node Edge_1_2 {
+    component "Sensors and Data Handler" as SDH2 #Green
+    component "Patient Handler" as PH2 #Green
+}
+
+node "Edge_1_N" as Edge_1_3 {
+    component "Sensors and Data Handler" as SDH3 #Green
+    component "Patient Handler" as PH3 #Green
+}
+
+together {
+node "<<device>>\n(N) Sensor" as Sensor_1_1
+node "<<device>>\n(N) Daily Activity Platform" as DAP_1_1
+node "<<device>>\n(N) Patient" as Patient_1_1
+
+
+Sensor_1_1 <- Edge_1_1 : HTTPS
+DAP_1_1 <- Edge_1_1 : HTTPS
+Patient_1_1 <- Edge_1_1 : VPN+HTTPS
+}
+
+Edge_1_1 <- Hospital_1 : HTTPS
+
+Attending_Physician_1_1 --> Hospital_1 : VPN+HTTPS
+On_Call_Physician_1_1 --> Hospital_1 : VPN+HTTPS
+
+node "<<device>>\n(N) Attending Physician" as Attending_Physician_1_2
+node "<<device>>\n(N) On Call Physician" as On_Call_Physician_1_2
+
+
+node "Hospital_N" as Hospital_2 {
+    component "Alerts Handler" as AH2
+    component "Attending Physician Handler" as APH2
+    component "On Call Physician Handler" as OCPH2
+
+    component "Patient Data Handler" as PDH2 #Green
+    component "Patient Data Handler Hot Spare" as PDH2B #Gray
+    component "Verify Exercise Compliance Handler" as VECH2
+    database "Storage" as DS2 #Purple
+
+    PDH2 --> DS2 : <<use>>
+    VECH2 --> DS2 : <<use>>
+}
+
+Attending_Physician_1_2 --> Hospital_2 : VPN+HTTPS
+On_Call_Physician_1_2 --> Hospital_2 : VPN+HTTPS
+
+
+
+node "<<device>>\n(N) Sensor" as Sensor_1_2
+node "<<device>>\n(N) Daily Activity Platform" as DAP_1_2
+node "<<device>>\n(N) Patient" as Patient_1_2
+
+Sensor_1_2 <- Edge_1_2 : HTTPS
+DAP_1_2 <- Edge_1_2 : HTTPS
+Patient_1_2 <- Edge_1_2 : VPN+HTTPS
+
+node "<<device>>\n(N) Sensor" as Sensor_1_3
+node "<<device>>\n(N) Daily Activity Platform" as DAP_1_3
+node "<<device>>\n(N) Patient" as Patient_1_3
+
+Sensor_1_3 <- Edge_1_3 : HTTPS
+DAP_1_3 <- Edge_1_3 : HTTPS
+Patient_1_3 <- Edge_1_3 : VPN+HTTPS
+
+Edge_1_2 <- Hospital_2 : HTTPS
+Edge_1_3 <- Hospital_2 : HTTPS
+
+@enduml

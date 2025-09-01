@@ -1,4 +1,4 @@
-@startuml data_diagram
+@startuml concrete_diagram
 
 class "<<Sequential>> Sensors and Data Handler" as C1 {
   <<Async, Push>>
@@ -34,7 +34,7 @@ class "<<Sequential>> Attending Physician Handler" as C5 {
   +confirmPhoneCallTowardsPatient(Patient, Anomaly)
 }
 
-class "<<Concurrent>> Process Data Handler" as C6 {
+class "<<Concurrent>> Patient Data Handler" as C6 {
   <<Async, Push>>
   +processPatientData(Patient, PatientData)
   +processSensorsData(PhysiologicalData)
