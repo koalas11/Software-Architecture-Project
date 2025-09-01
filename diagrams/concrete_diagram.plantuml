@@ -37,6 +37,8 @@ class "<<Sequential>> Attending Physician Handler" as C5 {
 class "<<Concurrent>> Process Data Handler" as C6 {
   <<Async, Push>>
   +processPatientData(Patient, PatientData)
+  +processSensorsData(PhysiologicalData)
+  +processDailyActivityData(DailiActivityData)
 }
 
 class "<<OneShot>> Verify Exercise Compliance Handler" as C7 {

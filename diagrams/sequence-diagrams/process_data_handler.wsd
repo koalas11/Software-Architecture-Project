@@ -1,0 +1,30 @@
+@startuml
+participant SensorDataHandler as SDH1
+participant SensorDataHandler as SDH2
+participant PatientHandler as PH
+participant ProcessDataHandler as PDH
+participant AlertsHandler as AH
+participant ProcessDataHandlerThread as PDH1
+participant ProcessDataHandlerThread as PDH2
+participant ProcessDataHandlerThread as PDH3
+
+PH -> PDH ++ : processPatientData(Patient, PhysiologicalData)
+
+
+
+SDH1 -> PDH ++ : processPatientData(PhysiologicalData)
+SDH2 -> PDH ++ : processPatientData(DailyActivityData)
+
+PDH1 -> AH : sendIdentifyHospitalAndAmbulance(Patient)
+PDH1 -> AH : sendIdentifyOnCallPhysician(Patient, Anomaly)
+PDH1 -> AH : sendThresholdAlertAndPatientNumber(Patient, TherapeuticPlan, Threshold)
+
+PDH2 -> AH : sendIdentifyHospitalAndAmbulance(Patient)
+PDH2 -> AH : sendIdentifyOnCallPhysician(Patient, Anomaly)
+PDH2 -> AH : sendThresholdAlertAndPatientNumber(Patient, TherapeuticPlan, Threshold)
+
+PDH3 -> AH : sendIdentifyHospitalAndAmbulance(Patient)
+PDH3 -> AH : sendIdentifyOnCallPhysician(Patient, Anomaly)
+PDH3 -> AH : sendThresholdAlertAndPatientNumber(Patient, TherapeuticPlan, Threshold)
+
+@enduml

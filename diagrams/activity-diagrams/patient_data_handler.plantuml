@@ -15,23 +15,43 @@ gets used by both acquire use cases, so
 end note
 
 start
-
-:A$num - TODO; <<acceptEvent>>
-:I$num : DATA; <<task>>
-!$num = $num + 1
-: TODO;
-: TODO;
-: TODO;
 fork
-: TODO;
+:A$num - Process PhysiologicalData; <<acceptEvent>>
+:I$num : PhysiologicalData; <<task>>
+!$num = $num + 1
 fork again
-: TODO;
-fork again
-: TODO;
-fork again
-: TODO;
+:A$num - Process DailyActivityData; <<acceptEvent>>
+:I$num : DailyActivityData; <<task>>
+!$num = $num + 1
 end fork
+:I$num : PatientData; <<task>>
+:\t<<buffer>>
+I$num.1 : PatientData
+\t{1..*}; <<task>>
 
+:\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
+:I$num : Therapeutic Plan; <<data>> <<task>>
+
+:\t<<datastore>>\n I$num.2 : Medical Record\n{1..*}; <<datastore>> <<task>>
+:I$num : Medical Record; <<data>> <<task>>
+
+fork
+:A$num : Verify Thresholds;
+:I$num : ThresholdAlert; <<task>>
+!$num = $num + 1
+:sendThresholdAlert; <<output>>
+fork again
+:A$num : Verify Anomalies;
+:I$num : Anomaly; <<task>>
+:I$num : AnomalyAlert; <<task>>
+!$num = $num + 1
+:sendIdentifyOnCallPhysician; <<output>>
+fork again
+:A$num : Verify Red codes;
+:I$num : RedCodeAlert; <<task>>
+!$num = $num + 1
+:sendIdentifyHospitalAndAmbulance; <<output>>
+end fork
 
 stop
 
