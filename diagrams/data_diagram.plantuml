@@ -23,63 +23,45 @@ class "Patient Data" as PatientData {
   +parameters
 }
 
-class "Physiological Data" as PhysiologicalData {
+class "Physiological Data" as PhysiologicalData {}
 
-}
-
-class "Daily Activity Data" as DailyActivityData {
-
-}
+class "Daily Activity Data" as DailyActivityData {}
 
 class Physician {
   +contactInfo
 }
 
-class AttendingPhysician {
-}
+class AttendingPhysician {}
 
-class OnCallPhysician {
-}
+class OnCallPhysician {}
 
 class HealthcareFacility {
   +name
   +location
 }
 
-class Hospital {
-}
+class Hospital {}
 
-class Ambulance {
+class Ambulance {}
 
-}
+class Alert {}
 
-class Alert {
-}
+class RedTypeAlert {}
 
-class RedTypeAlert {
-
-}
-
-class AnomalyDetectedAlert {
-
-}
+class AnomalyDetectedAlert {}
 
 class ThresholdAlert {
-
+  + patientCallConfirmation
 }
 
 RedTypeAlert --> Alert
 AnomalyDetectedAlert --> Alert
 ThresholdAlert --> Alert
 
-class Anomaly {
-  + patientCallConfirmation
-}
+class Anomaly {}
 
 
-class Location {
-
-}
+class Location {}
 
 class Address {
   +street

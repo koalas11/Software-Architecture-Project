@@ -36,7 +36,10 @@ I$num.1: Daily Activity
 
 :A$num - Verify activity;
 !$num = $num + 1
-:A$num - Send threshold alarm (DA RIVEDERE); <<output>>
+' if (Threshold exceeded) is (yes) then
+'   :A$num - Send threshold alarm; <<output>>
+' else (no)
+' endif
 
 stop
 @enduml

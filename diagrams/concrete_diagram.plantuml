@@ -17,12 +17,11 @@ class "<<Concurrent>> Alerts Handler" as C2 {
 }
 
 class "<<Sequential>> Patient Handler" as C3 {
-  +manuallySendPhysiologicalData(PhysiologicalData) <<Async, Push>>
+  +manuallySendPhysiologicalData(PhysiologicalData)
   +viewTherapeuticPlan(Patient) <<Sync, Pull>>
 }
 
 class "<<Sequential>> On Call Physician Handler" as C4 {
-  <<Async, Push>>
   +sendDiagnosticInformation(DiagnosticInformation)
   +sendPatientHealthInfo(PatientHealthInfo)
 }
@@ -31,8 +30,8 @@ class "<<Sequential>> Attending Physician Handler" as C5 {
   -configureSensorFrequencies(Frequency[]) <<Async, Push>>
   +defineTherapeuticPlan(Patient, TherapeuticPlan)
   +modifyTherapeuticPlan(Patient, TherapeuticPlan)
-  +viewPatientMedicalRecord(Patient) <<Sync, Pull>>
-  +confirmPhoneCallTowardsPatient(Patient)
+  +viewPatientMedicalRecord(Patient)
+  +confirmPhoneCallTowardsPatient(Patient, Anomaly)
 }
 
 class "<<Concurrent>> Process Data Handler" as C6 {
