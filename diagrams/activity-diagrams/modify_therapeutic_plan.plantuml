@@ -35,20 +35,15 @@ start
 :A$num - Modify therapeutic plan;
 !$num = $num + 1
 
-fork
-  :A$num - Store Therapeutic Plan;
-  :\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
-fork again
-  if (Updated Physiological Sensor Frequencies?) is (yes) then
-    :\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>> <<buffer>>
+if (Updated Physiological Sensor Frequencies?) is (yes) then
+  :\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>> <<buffer>>
 
-    :Send to UpdateSensorFrequencies; <<output>>
-    note left
-    Update Sensor Handler
-    end note
-  else (no)
-  endif
-end merge
+  :A$num Update Sensor Frequencies;
+  !$num = $num + 1
+else (no)
+endif
+:A$num - Store Therapeutic Plan;
+:\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
 
 stop
 

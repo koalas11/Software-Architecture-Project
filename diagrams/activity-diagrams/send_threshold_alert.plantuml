@@ -1,0 +1,38 @@
+@startuml send_threshold_alert
+
+!$num = 1
+
+floating note
+<<complexity>>
+low
+----
+<<frequency>>
+16000/day
+end note
+
+' mi arriva segnale con paziente da handle data
+' trovare healthcare più vicina
+' trovare on call di turno
+' trovare indirizzo paziente (ricevero il paziente da handleData)
+' trovare medical record del paziente (ricevero il paziente da handleData)
+
+start
+:A$num - Identify On-Call Physician; <<acceptEvent>>
+:I$num : Patient; <<task>>
+!$num = $num + 1
+:I$num : Threshold; <<task>>
+!$num = $num + 1
+
+:A$num - Get Patient Attending Physician;
+:\t<<datastore>>\n I$num.1 : Attending Physician\n{1..*}; <<task>>
+:I$num : Attending Physician; <<task>>
+!$num = $num + 1
+
+:I$num : ThresholdAlert; <<task>>
+
+:A$num - Notify Attending Physician with Patient Number;
+
+
+stop
+
+  @enduml

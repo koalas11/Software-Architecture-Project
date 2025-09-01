@@ -13,7 +13,7 @@ end note
 
 start
 :A$num - Confirm Phone Call; <<acceptEvent>>
-:I$num : Anomaly; <<task>>
+:I$num : ThresholdAlert; <<task>>
 !$num = $num + 1
 
 :A$num - Set confirmation;
@@ -21,6 +21,6 @@ start
 
 :A$num - Store Data;
 :I$num.1 : <<datastore>>
-Anomaly; <<task>>
+ThresholdAlert; <<task>>
 stop
 @enduml

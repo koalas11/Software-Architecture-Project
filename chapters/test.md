@@ -5,7 +5,7 @@
 |A4 Identify Ambulance and Hospital + Notify | 700 / day | high | < 2 minutes | C2 | 1 |
 |A9 Identify On-Call Phy + Notify | 6000 / day | medium | < 2 minutes | C2 | 1 |
 |A13 Send Threshold Alert | 16000 / day | low | < 2 minutes | C2 | 1 |
-|A5 Manually Send Phy Data | 15 / day | low | < 1 second | C3 | #npatient |
+|A5 Send Phy Data | 15 / day | low | < 1 second | C3 | #npatient |
 |A6 View Theraupetic Plan | 1 / day | low | < 30 minutes | C3 | #npatient |
 |A7 Send Diagnostic Information | 6000 / day | low | < 30 minutes | C4 | 1 |
 |A8 Send patient Health Info | 6000 / day | low | < 30 minutes | C4 | 1 |

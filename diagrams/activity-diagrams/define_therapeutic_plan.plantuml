@@ -17,17 +17,12 @@ start
 :I$num : Therapeutic Plan; <<task>>
 !$num = $num + 1
 
-fork
-  :A$num - Store Therapeutic Plan;
-  :\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<task>>
-fork again
-  :\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>>
+:\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>>
 
-  :Send to UpdateSensorFrequencies; <<output>>
-  note left
-  Update Sensor Handler
-  end note
-end merge
+:A$num Update Sensor Frequencies;
+!$num = $num + 1
+:A$num - Store Therapeutic Plan;
+:\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<task>>
 
 stop
 

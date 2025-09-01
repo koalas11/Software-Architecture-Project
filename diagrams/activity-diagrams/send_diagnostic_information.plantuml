@@ -1,0 +1,24 @@
+@startuml send_diagnostic_information
+
+!$num = 1
+
+floating note
+<<complexity>>
+low
+----
+<<frequency>>
+6000/day
+end note
+
+start
+:A$num - Send Diagnostic Information; <<acceptEvent>>
+:I$num : Diagnostic Information; <<task>>
+:\t<<buffer>>
+I$num.1 : Diagnostic Information
+\t{1..*}; <<task>>
+!$num = $num + 1
+:A$num - Store Data;
+:I$num.1 : <<datastore>>
+Diagnostic Information; <<task>>
+stop
+@enduml

@@ -36,10 +36,11 @@ I$num.1: Daily Activity
 
 :A$num - Verify activity;
 !$num = $num + 1
-' if (Threshold exceeded) is (yes) then
-'   :A$num - Send threshold alarm; <<output>>
-' else (no)
-' endif
+if (Activity not compliant) is (yes) then
+  :I$num : ThresholdAlert; <<task>>
+  :A$num - Send threshold alarm; <<output>>
+else (no)
+endif
 
 stop
 @enduml

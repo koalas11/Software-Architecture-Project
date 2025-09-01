@@ -23,6 +23,8 @@ class "Patient Data" as PatientData {
   +parameters
 }
 
+class "Diagnostic Information" as DiagnosticInformation {}
+
 class "Physiological Data" as PhysiologicalData {}
 
 class "Daily Activity Data" as DailyActivityData {}
@@ -115,8 +117,11 @@ OnCallPhysician --> Physician
 
 PhysiologicalData --> PatientData
 DailyActivityData --> PatientData
+DiagnosticInformation --> PatientData
 
 Alert "*" -- "1" Patient
+
+Threshold "1" -- "1" ThresholdAlert
 
 
 @enduml

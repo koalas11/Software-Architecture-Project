@@ -26,10 +26,10 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   
   ' Patient Use Cases - Patient interacts with system
   together {
-    (Manually Send Physiological Data) #E6F3FF
+    (Send Physiological Data) #E6F3FF
     (View Therapeutic Plan) #E6F3FF
 
-    Patient --> (Manually Send Physiological Data)
+    Patient --> (Send Physiological Data)
     Patient --> (View Therapeutic Plan)
   }
   
@@ -53,13 +53,13 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   together {
     (Send Diagnostic Information) #FFE4FF
     (Send Patient Health Information) #FFE4FF
-    (Send Patient Address and Medical Records) #FFE4FF
+    (Send Patient Address and Medical Record) #FFE4FF
 
     OnCallPhysician --> (Send Diagnostic Information)
     OnCallPhysician --> (Send Patient Health Information)
   }
   
-  OnCallPhysician <-- (Send Patient Address and Medical Records)
+  OnCallPhysician <-- (Send Patient Address and Medical Record)
 
     (Identify Ambulance and Hospital) #FFE4E1
 
@@ -88,7 +88,7 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   (Identify On-Call Physician) #FFE4FF
 
   ' System Internal Relationships
-  (Manually Send Physiological Data) ..> MainSystemCase : <<includes>>
+  (Send Physiological Data) ..> MainSystemCase : <<includes>>
   MainSystemCase <..  (Acquire Physiological Data) : <<includes>>
   (Send Threshold Alerts and Patient Number) ..> MainSystemCase: <<extends>>\n[Threshold Exceeded]
   (Identify On-Call Physician) ..> MainSystemCase : <<extends>>\n[Anomaly Detected]
@@ -101,12 +101,14 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   (Send Emergency Alert To Ambulance) --> Emergency
   (Send Emergency Alert To Hospital) --> Hospital
 
-  (Send Patient Address and Medical Records) <.. (Identify On-Call Physician) : <<includes>>
+  (Send Patient Address and Medical Record) <.. (Identify On-Call Physician) : <<includes>>
 
   ' Explanatory notes for key system features
   note bottom of MainSystemCase : Process Patient Data to store the data and check\n for anomalies, trigger alerts \nand red code emergencies
 
   (Verify Exercise Compliance) #E6FFE6
+
+  (Verify Exercise Compliance) <.. (Send Threshold Alerts and Patient Number) : <<extends>>\n[Activity Not Compliant]
 
   note top of (Verify Exercise Compliance) : <<note>>\nPerformed at end of each day
 

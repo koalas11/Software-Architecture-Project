@@ -17,6 +17,10 @@ end note
 start
 fork
 :A$num - Process PhysiologicalData; <<acceptEvent>>
+note left
+This consider data from
+sensors and manually sent
+end note
 :I$num : PhysiologicalData; <<task>>
 !$num = $num + 1
 fork again
@@ -29,28 +33,37 @@ end fork
 I$num.1 : PatientData
 \t{1..*}; <<task>>
 
-:\t<<datastore>>\n I$num.1 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
+:\t<<datastore>>\n I$num.2 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
 :I$num : Therapeutic Plan; <<data>> <<task>>
 
-:\t<<datastore>>\n I$num.2 : Medical Record\n{1..*}; <<datastore>> <<task>>
+:\t<<datastore>>\n I$num.3 : Medical Record\n{1..*}; <<datastore>> <<task>>
 :I$num : Medical Record; <<data>> <<task>>
 
 fork
 :A$num : Verify Thresholds;
-:I$num : ThresholdAlert; <<task>>
+if (Is Threshold Exceeded) then (yes)
+:I$num : Threshold; <<task>>
 !$num = $num + 1
 :sendThresholdAlert; <<output>>
+else (no)
+endif
 fork again
 :A$num : Verify Anomalies;
+if (Is Anomaly Detected) then (yes)
 :I$num : Anomaly; <<task>>
 :I$num : AnomalyAlert; <<task>>
 !$num = $num + 1
 :sendIdentifyOnCallPhysician; <<output>>
+else (no)
+endif
 fork again
 :A$num : Verify Red codes;
+if (Is Red Code Detected) then (yes)
 :I$num : RedCodeAlert; <<task>>
 !$num = $num + 1
 :sendIdentifyHospitalAndAmbulance; <<output>>
+else (no)
+endif
 end fork
 
 stop

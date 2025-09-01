@@ -1,4 +1,4 @@
-@startuml
+@startuml process_data_handler
 participant SensorDataHandler as SDH1
 participant SensorDataHandler as SDH2
 participant PatientHandler as PH

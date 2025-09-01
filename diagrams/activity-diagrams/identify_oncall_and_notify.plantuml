@@ -7,7 +7,7 @@ floating note
 medium
 ----
 <<frequency>>
-100/sec
+6000/day
 end note
 
 ' mi arriva segnale con paziente da handle data
@@ -19,6 +19,8 @@ end note
 start
 :A$num - Identify On-Call Physician; <<acceptEvent>>
 :I$num : Patient; <<task>>
+!$num = $num + 1
+:I$num : Anomaly; <<task>>
 !$num = $num + 1
 
 fork
@@ -42,6 +44,8 @@ fork again
   :I$num : Medical Record; <<task>>
   !$num = $num + 1
   end merge
+
+  :I$num : AnomalyAlert; <<task>>
 
   :A$num - Notify with address and medical record;
 
