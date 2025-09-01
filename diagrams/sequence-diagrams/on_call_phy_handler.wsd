@@ -1,0 +1,18 @@
+@startuml alerts
+actor OnCallPhysician
+participant OnCallPhysicianHandler as PH
+database PatientDataDS
+
+OnCallPhysician -> PH ++ : sendDiagnosticInformation(PatientData)
+PH -> PatientDataDS ++ : storePatientData(PatientData)
+PH <- PatientDataDS -- : confirmation
+OnCallPhysician <- PH -- : confirmation
+
+OnCallPhysician -> PH ++ : sendPatientHealthInformation(PatientData)
+
+PH -> PatientDataDS ++ : storePatientData(PatientData)
+PH <- PatientDataDS -- : confirmation
+
+OnCallPhysician <- PH -- : confirmation
+
+@enduml

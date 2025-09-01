@@ -1,0 +1,37 @@
+@startuml alerts
+actor AttendingPhysician
+actor PhysiologicalSensor as PS
+participant AttendingPhysicianHandler as APH
+database MedicalRecordDS
+database ThresholdAlertDS
+
+AttendingPhysician -> APH ++ : viewMedicalRecord(Patient)
+APH -> MedicalRecordDS ++ : getMedicalRecord(Patient)
+APH <- MedicalRecordDS -- : MedicalRecord
+
+AttendingPhysician <- APH -- : MedicalRecord
+
+AttendingPhysician -> APH ++ : confirmPhoneCallTowardsPatient(Patient, ThresholdAlert)
+APH -> ThresholdAlertDS ++ : storeThresholdAlert(ThresholdAlert)
+APH <- ThresholdAlertDS -- : confirmation
+AttendingPhysician <- APH -- : confirmation
+
+AttendingPhysician -> APH ++ : defineTherapeuticPlan(TherapeuticPlan)
+APH -> PS ++ : updatePhysiologicalFrequencies(Frequencies)
+deactivate PS
+APH -> MedicalRecordDS ++ : createTherapeuticPlan(TherapeuticPlan)
+APH <- MedicalRecordDS -- : confirmation
+
+AttendingPhysician <- APH -- : confirmation
+
+AttendingPhysician -> APH ++ : modifyTherapeuticPlan(TherapeuticPlan)
+alt Frequencies changed?
+  APH -> PS ++ : updatePhysiologicalFrequencies(Frequencies)
+  deactivate PS
+end
+APH -> MedicalRecordDS ++ : storeTherapeuticPlan(TherapeuticPlan)
+APH <- MedicalRecordDS -- : confirmation
+AttendingPhysician <- APH -- : confirmation
+
+
+@enduml

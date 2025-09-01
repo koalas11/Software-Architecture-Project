@@ -1,23 +1,89 @@
-@startuml
+@startuml alerts
 actor Ambulance
 actor Hospital
 actor OnCallPhysician
 actor AttendingPhysician
-participant ProcessDataHandler as PDH
+participant ProcessDataHandler as PDH1
+participant ProcessDataHandler as PDH2
+participant ProcessDataHandler as PDH3
 participant AlertsHandler as AH
+participant AlertsHandlerThread as AH1
+participant AlertsHandlerThread as AH2
+participant AlertsHandlerThread as AH3
+participant AlertsHandlerThread as AH4
 database AddressDS
-database PatientDS
-database AnomalyDS
 database AttendingPhysicianDS
 database OnCallPhysicianDS
 database HospitalDS
+database HealthCareFacilityDS
+database MedicalRecordDS
 database AmbulanceDS
-database ThresholdDS
 
-activate PDH
-PDH -> AH : identifyHospitalAndAmbulance(Patient)
-deactivate PDH
+activate PDH1
+PDH1 -> AH : sendIdentifyHospitalAndAmbulance(Patient)
+deactivate PDH1
 
-PDH -> AH : identifyOnCallPhysician(Patient)
-PDH -> AH : sendThresholdAlert(AttendingPhysician, Threshold)
+activate AH
+
+AH -> AddressDS ++ : pullAddress(Patient)
+AH <- AddressDS -- : Address
+
+AH -> AH1 ** : startHospital(Address)
+
+activate AH1
+AH1 -> HospitalDS ++ : findNearestHospital(Address)
+AH1 <- HospitalDS -- : Hospital
+AH1 -> Hospital : sendHospitalAlert()
+deactivate AH1
+
+AH -> AH2 ** : startAmbulance(Address)
+deactivate AH
+
+activate AH2
+AH2 -> AmbulanceDS ++ : findNearestAmbulance(Address)
+AH2 <- AmbulanceDS -- : Ambulance
+AH2 -> Ambulance : sendAmbulanceAlert(Address)
+deactivate AH2
+
+
+activate PDH2
+PDH2 -> AH : sendIdentifyOnCallPhysician(Patient, Anomaly)
+deactivate PDH2
+
+activate AH
+AH -> AH3 ** : startIdentifyOnCallPhysician(Patient)
+activate AH3
+AH3 -> AddressDS ++ : pullAddress(Patient)
+AH3 <- AddressDS -- : Address
+
+AH3 -> HealthCareFacilityDS ++ : findHealthCareFacility(Address)
+AH3 <- HealthCareFacilityDS -- : HealthCareFacility
+
+AH3 -> OnCallPhysicianDS ++ : findAvailableOnCallPhysician(HealthCareFacility)
+AH3 <- OnCallPhysicianDS -- : OnCallPhysician
+AH <- AH3 : OnCallPhysician, Address
+deactivate AH3
+
+AH -> AH4 ** : startGetPatientMedicalRecord(Patient)
+activate AH4
+AH4 -> MedicalRecordDS ++ : pullMedicalRecord(Patient)
+AH4 <- MedicalRecordDS -- : MedicalRecord
+AH <- AH4 : MedicalRecord
+deactivate AH4
+
+AH -> OnCallPhysician : notifyOnCallPhysician(Address, MedicalRecord)
+deactivate AH
+
+activate PDH3
+PDH3 -> AH : sendThresholdAlertAndPatientNumber(Patient, TherapeuticPlan, Threshold)
+deactivate PDH3
+
+activate AH
+AH -> AttendingPhysicianDS ++ : pullAttendingPhysician()
+AH <- AttendingPhysicianDS -- : AttendingPhysician
+
+
+AH -> AttendingPhysician : sendThresholdAlert(Patient, Threshold)
+deactivate AH
+
 @enduml

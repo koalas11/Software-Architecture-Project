@@ -1,0 +1,20 @@
+@startuml verify_exercise_compliance
+
+participant ExerciseComplianceHandler as ECH
+database PatientDS
+database DailyActivityDS
+
+activate ECH
+ECH -> PatientDS ++ : getPatients()
+ECH <- PatientDS -- : patientsList
+
+loop for each patient
+  ECH -> DailyActivityDS ++ : getDailyActivityData(Patient)
+  ECH <- DailyActivityDS -- : DailyActivityData
+
+  ECH -> ECH : verifyExerciseCompliance(DailyActivityData)
+end
+
+deactivate ECH
+
+@enduml

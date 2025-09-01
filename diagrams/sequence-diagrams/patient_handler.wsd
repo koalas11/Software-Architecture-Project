@@ -1,0 +1,20 @@
+@startuml alerts
+actor Patient
+participant PatientHandler as PH
+database TherapeuticPlanDS
+database PhysiologicalDataDS
+participant ProcessDataHandler as PDH
+
+Patient -> PH ++ : viewTherapeuticPlan()
+PH -> TherapeuticPlanDS ++ : getTherapeuticPlan(patientId)
+PH <- TherapeuticPlanDS -- : TherapeuticPlan
+PH -> Patient -- : displayTherapeuticPlan(TherapeuticPlan)
+
+Patient -> PH ++ : manuallySendPhysiologicalData(PhysiologicalData)
+
+PH -> PhysiologicalDataDS ++ : storePhysiologicalData(PhysiologicalData)
+PH <- PhysiologicalDataDS -- : confirmation
+
+PH -> PDH ++ : sendToProcessDataHandler(PhysiologicalData)
+deactivate PDH
+Patient <- PH -- : confirmation
