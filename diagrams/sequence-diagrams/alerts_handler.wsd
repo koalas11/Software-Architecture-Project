@@ -1,0 +1,23 @@
+@startuml
+actor Ambulance
+actor Hospital
+actor OnCallPhysician
+actor AttendingPhysician
+participant ProcessDataHandler as PDH
+participant AlertsHandler as AH
+database AddressDS
+database PatientDS
+database AnomalyDS
+database AttendingPhysicianDS
+database OnCallPhysicianDS
+database HospitalDS
+database AmbulanceDS
+database ThresholdDS
+
+activate PDH
+PDH -> AH : identifyHospitalAndAmbulance(Patient)
+deactivate PDH
+
+PDH -> AH : identifyOnCallPhysician(Patient)
+PDH -> AH : sendThresholdAlert(AttendingPhysician, Threshold)
+@enduml
