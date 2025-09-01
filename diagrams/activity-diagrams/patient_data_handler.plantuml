@@ -39,32 +39,51 @@ I$num.1 : PatientData
 :\t<<datastore>>\n I$num.3 : Medical Record\n{1..*}; <<datastore>> <<task>>
 :I$num : Medical Record; <<data>> <<task>>
 
-fork
-:A$num : Verify Thresholds;
-if (Is Threshold Exceeded) then (yes)
-:I$num : Threshold; <<task>>
+:A$num : Analyze Patient Data and Record;
+
+switch (Analysis result)
+case (Is Red Code Detected)
+:I$num : RedCodeAlert; <<task>>
 !$num = $num + 1
-:sendThresholdAlert; <<output>>
-else (no)
-endif
-fork again
-:A$num : Verify Anomalies;
-if (Is Anomaly Detected) then (yes)
+:sendIdentifyHospitalAndAmbulance; <<output>>
+case (Is Anomaly Detected)
 :I$num : Anomaly; <<task>>
 :I$num : AnomalyAlert; <<task>>
 !$num = $num + 1
 :sendIdentifyOnCallPhysician; <<output>>
-else (no)
-endif
-fork again
-:A$num : Verify Red codes;
-if (Is Red Code Detected) then (yes)
-:I$num : RedCodeAlert; <<task>>
+case (Is Threshold Exceeded)
+:I$num : Threshold; <<task>>
 !$num = $num + 1
-:sendIdentifyHospitalAndAmbulance; <<output>>
-else (no)
-endif
-end fork
+:sendThresholdAlert; <<output>>
+case (Analysis ok)
+endswitch
+
+' fork
+' :A$num : Verify Thresholds;
+' if (Is Threshold Exceeded) then (yes)
+' :I$num : Threshold; <<task>>
+' !$num = $num + 1
+' :sendThresholdAlert; <<output>>
+' else (no)
+' endif
+' fork again
+' :A$num : Verify Anomalies;
+' if (Is Anomaly Detected) then (yes)
+' :I$num : Anomaly; <<task>>
+' :I$num : AnomalyAlert; <<task>>
+' !$num = $num + 1
+' :sendIdentifyOnCallPhysician; <<output>>
+' else (no)
+' endif
+' fork again
+' :A$num : Verify Red codes;
+' if (Is Red Code Detected) then (yes)
+' :I$num : RedCodeAlert; <<task>>
+' !$num = $num + 1
+' :sendIdentifyHospitalAndAmbulance; <<output>>
+' else (no)
+' endif
+' end fork
 
 stop
 
