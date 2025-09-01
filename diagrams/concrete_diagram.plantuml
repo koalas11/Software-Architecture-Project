@@ -1,5 +1,5 @@
 @startuml concrete_diagram
-
+!pragma layout elk 
 class "<<Sequential>> Sensors and Data Handler" as C1 {
   <<Async, Push>>
   + pushPhysiologicalData(PhysiologicalData): void

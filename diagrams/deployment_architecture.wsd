@@ -1,4 +1,5 @@
 @startuml deployment_architecture
+!pragma layout elk 
 left to right direction
 
 node "<<device>>\n(N) Attending Physician" as Attending_Physician_1_1
@@ -39,12 +40,12 @@ node "<<device>>\n(N) Daily Activity Platform" as DAP_1_1
 node "<<device>>\n(N) Patient" as Patient_1_1
 
 
-Sensor_1_1 <- Edge_1_1 : HTTPS
-DAP_1_1 <- Edge_1_1 : HTTPS
-Patient_1_1 <- Edge_1_1 : VPN+HTTPS
+Sensor_1_1 -> Edge_1_1 : HTTPS
+DAP_1_1 -> Edge_1_1 : HTTPS
+Patient_1_1 -> Edge_1_1 : VPN+HTTPS
 }
 
-Edge_1_1 <- Hospital_1 : HTTPS
+Edge_1_1 -> Hospital_1 : HTTPS
 
 Attending_Physician_1_1 --> Hospital_1 : VPN+HTTPS
 On_Call_Physician_1_1 --> Hospital_1 : VPN+HTTPS
@@ -76,19 +77,19 @@ node "<<device>>\n(N) Sensor" as Sensor_1_2
 node "<<device>>\n(N) Daily Activity Platform" as DAP_1_2
 node "<<device>>\n(N) Patient" as Patient_1_2
 
-Sensor_1_2 <- Edge_1_2 : HTTPS
-DAP_1_2 <- Edge_1_2 : HTTPS
-Patient_1_2 <- Edge_1_2 : VPN+HTTPS
+Sensor_1_2 -> Edge_1_2 : HTTPS
+DAP_1_2 -> Edge_1_2 : HTTPS
+Patient_1_2 -> Edge_1_2 : VPN+HTTPS
 
 node "<<device>>\n(N) Sensor" as Sensor_1_3
 node "<<device>>\n(N) Daily Activity Platform" as DAP_1_3
 node "<<device>>\n(N) Patient" as Patient_1_3
 
-Sensor_1_3 <- Edge_1_3 : HTTPS
-DAP_1_3 <- Edge_1_3 : HTTPS
-Patient_1_3 <- Edge_1_3 : VPN+HTTPS
+Sensor_1_3 -> Edge_1_3 : HTTPS
+DAP_1_3 -> Edge_1_3 : HTTPS
+Patient_1_3 -> Edge_1_3 : VPN+HTTPS
 
-Edge_1_2 <- Hospital_2 : HTTPS
-Edge_1_3 <- Hospital_2 : HTTPS
+Edge_1_2 -> Hospital_2 : HTTPS
+Edge_1_3 -> Hospital_2 : HTTPS
 
 @enduml

@@ -1,4 +1,5 @@
 @startuml data_diagram
+!pragma layout elk 
 ' Class diagram for the problem architecture (WHAT)
 
 class Patient {
