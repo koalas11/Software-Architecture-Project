@@ -4,10 +4,10 @@
 
 floating note
 <<complexity>>
-medium
+high
 ----
 <<frequency>>
-100/sec
+700/day
 end note
 
 ' mi arriva segnale con paziente e dati paziente da handle data
@@ -18,7 +18,7 @@ end note
 ' comunicare ad ospedale redcode alert
 
 start
-:A$num - Identify Hospital and Ambulance; <<input>>
+:A$num - Identify Hospital and Ambulance; <<acceptEvent>>
 :I$num : Patient; <<task>>
 !$num = $num + 1
 
@@ -35,13 +35,12 @@ fork
 
   :A$num - Notify hospital about redcode alert; <<output>>
   !$num = $num + 1
+  stop
 fork again
   :A$num - Find nearest available ambulance;
   :\t<<datastore>>\n I$num.1 : Ambulance\n{1..*}; <<task>>
   :I$num : Ambulance; <<task>>
   !$num = $num + 1
   :A$num - Notify ambulance about redcode alert; <<output>>
-end fork
-
 stop
 @enduml

@@ -16,7 +16,7 @@ end note
 
 start
 
-:A$num - TODO; <<input>>
+:A$num - TODO; <<acceptEvent>>
 :I$num : DATA; <<task>>
 !$num = $num + 1
 : TODO;

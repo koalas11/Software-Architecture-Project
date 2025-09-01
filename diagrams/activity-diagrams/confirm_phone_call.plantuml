@@ -7,12 +7,12 @@ floating note
 low
 ----
 <<frequency>>
-100/sec
+700/day
 end note
 
 
 start
-:A$num - Confirm Phone Call; <<input>>
+:A$num - Confirm Phone Call; <<acceptEvent>>
 :I$num : Anomaly; <<task>>
 !$num = $num + 1
 

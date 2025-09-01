@@ -15,7 +15,7 @@ end note
 
 
 start
-:A$num - Acquire Physiological Data; <<input>>
+:A$num - Acquire Physiological Data; <<acceptEvent>>
 :I$num : Physiological Data; <<task>>
 :\t<<buffer>>
 I$num.1 : Physiological Data

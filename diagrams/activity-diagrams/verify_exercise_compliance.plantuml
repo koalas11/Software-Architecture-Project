@@ -17,7 +17,7 @@ end note
 ' generate report or notify attending physician
 
 :\t\t\t\t\t\tCron: every day at 00:00; <<time-event>>
-:A$num - Verify exercise compliance; <<input>>
+:A$num - Verify exercise compliance; <<acceptEvent>>
 !$num = $num + 1
 :A$num Get all Patient(s);
 :\t<<datastore>>

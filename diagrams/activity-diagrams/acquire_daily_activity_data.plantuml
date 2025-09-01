@@ -14,7 +14,7 @@ low
 end note
 
 start
-:A$num - Acquire Daily Activity Data; <<input>>
+:A$num - Acquire Daily Activity Data; <<acceptEvent>>
 :I$num : Daily Activity Data; <<task>>
 :\t<<buffer>>
 I$num.1 : Daily Activity Data

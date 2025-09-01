@@ -1,0 +1,45 @@
+@startuml data_diagram
+
+class "<<Concurrent>> Sensors and Data Handler" as C1 {
+  <<Async, Push>>
+  + pushPhysiologicalData(PhysiologicalData): void
+  + pushDailyActivityData(DailyActivityData): void
+}
+
+class "<<Sequential>> Alerts Handler" as C2 {
+  identifyHospitalAndAmbulance(Patient)
+  identifyOnCallPhysician(Patient)
+  <<Async>>
+  sendHospitalAlert(Hospital)
+  sendAmbulanceAlert(Ambulance, Address)
+  notifyOnCallPhysician(OnCallPhysician, Anomaly)
+  sendThresholdAlert(AttendingPhysician, Threshold)
+}
+
+class "<<Sequential>> Patient Handler" as C3 {
+  <<Async, Push>> + manuallySendPhysiologicalData(PhysiologicalData)
+  viewTherapeuticPlan(Patient)
+}
+
+class "<<Sequential>> On Call Physician Handler" as C4 {
+  <<Async, Push>> + sendDiagnosticInformation(DiagnosticInformation)
+  <<Async, Push>> + sendPatientHealthInfo(PatientHealthInfo)
+}
+
+class "<<Sequential>> Attending Physician Handler" as C5 {
+  defineTherapeuticPlan(Patient, TherapeuticPlan)
+  modifyTherapeuticPlan(Patient, TherapeuticPlan)
+  viewPatientMedicalRecord(Patient)
+  confirmPhoneCallTowardsPatient(Patient)
+  configureSensorFrequencies(Frequency[])
+}
+
+class "<<Concurrent>> Process Data Handler" as C6 {
+  processPatientData(Patient, PatientData)
+}
+
+class "<<OneShot>> Verify Exercise Compliance Handler" as C7 {
+  verifyExerciseCompliance()
+}
+
+@enduml

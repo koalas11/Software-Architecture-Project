@@ -7,11 +7,11 @@ floating note
 low
 ----
 <<frequency>>
-100/day
+8/day
 end note
 
 start
-:A$num - View medical record; <<input>>
+:A$num - View medical record; <<acceptEvent>>
 !$num = $num + 1
 :A$num Get Medical Record;
 :\t<<datastore>>

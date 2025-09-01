@@ -17,7 +17,7 @@ end note
 ' trovare medical record del paziente (ricevero il paziente da handleData)
 
 start
-:A$num - Identify On-Call Physician; <<input>>
+:A$num - Identify On-Call Physician; <<acceptEvent>>
 :I$num : Patient; <<task>>
 !$num = $num + 1
 

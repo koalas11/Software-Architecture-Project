@@ -9,11 +9,11 @@ we assume we can update sensor at anytime
 medium
 ----
 <<frequency>>
-8/hour (considering whole Lombardy)
+\#nAttendingPhysician * 2/hour
 end note
 
 start
-:A$num - Define Therapeutic Plan; <<input>>
+:A$num - Define Therapeutic Plan; <<acceptEvent>>
 :I$num : Therapeutic Plan; <<task>>
 !$num = $num + 1
 

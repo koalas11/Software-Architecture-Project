@@ -11,7 +11,7 @@ low
 end note
 
 start
-:A$num - Send Physiological Data; <<input>>
+:A$num - Send Physiological Data; <<acceptEvent>>
 :I$num : Physiological Data; <<task>>
 :\t<<buffer>>
 I$num.1 : Physiological Data
