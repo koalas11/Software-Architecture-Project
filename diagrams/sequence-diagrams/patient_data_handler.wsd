@@ -1,15 +1,15 @@
-@startuml process_data_handler
+@startuml patient_data_handler
 
 skinparam sequence {
-ArrowColor Gray
-LifeLineBorderColor Gray
-LifeLineBackgroundColor WhiteSmoke
+  ArrowColor Gray
+  LifeLineBorderColor Gray
+  LifeLineBackgroundColor WhiteSmoke
 
-ActorBorderColor Tomato
-ActorBackgroundColor LightSalmon
+  ActorBorderColor Tomato
+  ActorBackgroundColor LightSalmon
 
-ParticipantBackgroundColor PowderBlue
-ParticipantBorderColor CornflowerBlue
+  ParticipantBackgroundColor PowderBlue
+  ParticipantBorderColor CornflowerBlue
 }
 skinparam DatabaseBorderColor SeaGreen
 skinparam DatabaseBackgroundColor PaleGreen
@@ -22,11 +22,13 @@ participant AlertsHandler as AH
 participant ProcessDataHandlerThread as PDH1
 participant ProcessDataHandlerThread as PDH2
 participant ProcessDataHandlerThread as PDH3
+database MedicalRecordDS
 
 PH -> PDH ++ : processPatientData(Patient, PhysiologicalData)
-
 PDH -> PDH1 ** : startProcessPatientData(Patient, PhysiologicalData)
 deactivate PDH
+PDH1 -> MedicalRecordDS ++ : getMedicalRecord(Patient)
+PDH1 <- MedicalRecordDS -- : MedicalRecord
 
 alt RedCode detected
 PDH1 -> AH ++ : sendIdentifyHospitalAndAmbulance(Patient)
@@ -40,9 +42,10 @@ deactivate AH
 end
 
 SDH1 -> PDH ++ : processPatientData(PhysiologicalData)
-
 PDH -> PDH2 ** : startProcessPatientData(Patient, PhysiologicalData)
 deactivate PDH
+PDH2 -> MedicalRecordDS ++ : getMedicalRecord(Patient)
+PDH2 <- MedicalRecordDS -- : MedicalRecord
 
 alt RedCode detected
 PDH2 -> AH ++ : sendIdentifyHospitalAndAmbulance(Patient)
@@ -56,9 +59,10 @@ deactivate AH
 end
 
 SDH2 -> PDH ++ : processPatientData(DailyActivityData)
-
 PDH -> PDH3 ** : startProcessPatientData(Patient, PhysiologicalData)
 deactivate PDH
+PDH3 -> MedicalRecordDS ++ : getMedicalRecord(Patient)
+PDH3 <- MedicalRecordDS -- : MedicalRecord
 
 alt RedCode detected
 PDH3 -> AH ++ : sendIdentifyHospitalAndAmbulance(Patient)

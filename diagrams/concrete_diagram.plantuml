@@ -1,5 +1,8 @@
 @startuml concrete_diagram
-!pragma layout elk 
+
+skinparam ClassBorderColor CornflowerBlue
+skinparam ClassBackgroundColor PowderBlue
+
 class "<<Sequential>> Sensors and Data Handler" as C1 {
   <<Async, Push>>
   + pushPhysiologicalData(PhysiologicalData): void

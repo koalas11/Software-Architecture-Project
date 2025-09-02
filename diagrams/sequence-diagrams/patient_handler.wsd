@@ -1,15 +1,15 @@
 @startuml patient_handler
 
 skinparam sequence {
-ArrowColor Gray
-LifeLineBorderColor Gray
-LifeLineBackgroundColor WhiteSmoke
+  ArrowColor Gray
+  LifeLineBorderColor Gray
+  LifeLineBackgroundColor WhiteSmoke
 
-ActorBorderColor Tomato
-ActorBackgroundColor LightSalmon
+  ActorBorderColor Tomato
+  ActorBackgroundColor LightSalmon
 
-ParticipantBackgroundColor PowderBlue
-ParticipantBorderColor CornflowerBlue
+  ParticipantBackgroundColor PowderBlue
+  ParticipantBorderColor CornflowerBlue
 }
 skinparam DatabaseBorderColor SeaGreen
 skinparam DatabaseBackgroundColor PaleGreen

@@ -1,48 +1,61 @@
 @startuml deployment_architecture
-!pragma layout elk 
+
+skinparam NodeBorderColor gold
+skinparam NodeBackgroundColor %lighten(gold, 50)
+
+skinparam FrameBorderColor gray
+skinparam FrameBackgroundColor whitesmoke
+
+skinparam DatabaseBorderColor %darken(plum, 50)
+skinparam DatabaseBackgroundColor plum
+
+skinparam ComponentBorderColor %darken(PaleTurquoise, 50)
+skinparam ComponentBackgroundColor PaleTurquoise
+
+!pragma layout elk
 left to right direction
 
 node "<<device>>\n(N) Attending Physician" as Attending_Physician_1_1
 node "<<device>>\n(N) On Call Physician" as On_Call_Physician_1_1
 
-node Hospital_1 {
+frame Hospital_1 {
     component "Alerts Handler" as AH1
     component "Attending Physician Handler" as APH1
     component "On Call Physician Handler" as OCPH1
 
-    component "Patient Data Handler" as PDH1 #Green
-    component "Patient Data Handler Hot Spare" as PDH1B #Gray
+    component "Patient Data Handler" as PDH1
+    component "Patient Data Handler Hot Spare" as PDH1B
     component "Verify Exercise Compliance Handler" as VECH1
-    database "Storage" as DS1 #Purple
+    database "Storage" as DS1
 
     PDH1 --> DS1 : <<use>>
     VECH1 --> DS1 : <<use>>
 }
 
-node Edge_1_1 {
-    component "Sensors and Data Handler" as SDH1 #Green
-    component "Patient Handler" as PH1 #Green
+frame Edge_1_1 {
+    component "Sensors and Data Handler" as SDH1
+    component "Patient Handler" as PH1
 }
 
-node Edge_1_2 {
-    component "Sensors and Data Handler" as SDH2 #Green
-    component "Patient Handler" as PH2 #Green
+frame Edge_1_2 {
+    component "Sensors and Data Handler" as SDH2
+    component "Patient Handler" as PH2
 }
 
-node "Edge_1_N" as Edge_1_3 {
-    component "Sensors and Data Handler" as SDH3 #Green
-    component "Patient Handler" as PH3 #Green
+frame Edge_1_N {
+    component "Sensors and Data Handler" as SDH3
+    component "Patient Handler" as PH3
 }
 
 together {
-node "<<device>>\n(N) Sensor" as Sensor_1_1
-node "<<device>>\n(N) Daily Activity Platform" as DAP_1_1
-node "<<device>>\n(N) Patient" as Patient_1_1
+    node "<<device>>\n(N) Sensor" as Sensor_1_1
+    node "<<device>>\n(N) Daily Activity Platform" as DAP_1_1
+    node "<<device>>\n(N) Patient" as Patient_1_1
 
 
-Sensor_1_1 -> Edge_1_1 : HTTPS
-DAP_1_1 -> Edge_1_1 : HTTPS
-Patient_1_1 -> Edge_1_1 : HTTPS
+    Sensor_1_1 -> Edge_1_1 : HTTPS
+    DAP_1_1 -> Edge_1_1 : HTTPS
+    Patient_1_1 -> Edge_1_1 : HTTPS
 }
 
 Edge_1_1 -> Hospital_1 : HTTPS
@@ -54,22 +67,22 @@ node "<<device>>\n(N) Attending Physician" as Attending_Physician_1_2
 node "<<device>>\n(N) On Call Physician" as On_Call_Physician_1_2
 
 
-node "Hospital_N" as Hospital_2 {
+frame Hospital_N {
     component "Alerts Handler" as AH2
     component "Attending Physician Handler" as APH2
     component "On Call Physician Handler" as OCPH2
 
-    component "Patient Data Handler" as PDH2 #Green
-    component "Patient Data Handler Hot Spare" as PDH2B #Gray
+    component "Patient Data Handler" as PDH2
+    component "Patient Data Handler Hot Spare" as PDH2B
     component "Verify Exercise Compliance Handler" as VECH2
-    database "Storage" as DS2 #Purple
+    database "Storage" as DS2
 
     PDH2 --> DS2 : <<use>>
     VECH2 --> DS2 : <<use>>
 }
 
-Attending_Physician_1_2 --> Hospital_2 : VPN+HTTPS
-On_Call_Physician_1_2 --> Hospital_2 : VPN+HTTPS
+Attending_Physician_1_2 --> Hospital_N : VPN+HTTPS
+On_Call_Physician_1_2 --> Hospital_N : VPN+HTTPS
 
 
 
@@ -85,11 +98,11 @@ node "<<device>>\n(N) Sensor" as Sensor_1_3
 node "<<device>>\n(N) Daily Activity Platform" as DAP_1_3
 node "<<device>>\n(N) Patient" as Patient_1_3
 
-Sensor_1_3 -> Edge_1_3 : HTTPS
-DAP_1_3 -> Edge_1_3 : HTTPS
-Patient_1_3 -> Edge_1_3 : HTTPS
+Sensor_1_3 -> Edge_1_N : HTTPS
+DAP_1_3 -> Edge_1_N : HTTPS
+Patient_1_3 -> Edge_1_N : HTTPS
 
-Edge_1_2 -> Hospital_2 : HTTPS
-Edge_1_3 -> Hospital_2 : HTTPS
+Edge_1_2 -> Hospital_N : HTTPS
+Edge_1_N -> Hospital_N : HTTPS
 
 @enduml

@@ -1,5 +1,9 @@
 @startuml data_diagram
-!pragma layout elk 
+
+skinparam ClassBorderColor CornflowerBlue
+skinparam ClassBackgroundColor PowderBlue
+
+!pragma layout elk
 ' Class diagram for the problem architecture (WHAT)
 
 class Patient {

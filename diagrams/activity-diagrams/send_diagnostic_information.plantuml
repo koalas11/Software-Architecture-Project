@@ -13,9 +13,6 @@ end note
 start
 :A$num - Send Diagnostic Information; <<acceptEvent>>
 :I$num : Diagnostic Information; <<task>>
-:\t<<buffer>>
-I$num.1 : Diagnostic Information
-\t{1..*}; <<task>>
 !$num = $num + 1
 :A$num - Store Data;
 :I$num.1 : <<datastore>>
