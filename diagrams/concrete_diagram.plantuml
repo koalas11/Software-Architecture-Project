@@ -17,7 +17,7 @@ class "<<Concurrent>> Alerts Handler" as C2 {
 }
 
 class "<<Sequential>> Patient Handler" as C3 {
-  +manuallySendPhysiologicalData(PhysiologicalData)
+  +sendPhysiologicalData(PhysiologicalData)
   +viewTherapeuticPlan(Patient) <<Sync, Pull>>
 }
 

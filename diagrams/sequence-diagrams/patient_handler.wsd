@@ -10,7 +10,7 @@ PH -> TherapeuticPlanDS ++ : getTherapeuticPlan(patientId)
 PH <- TherapeuticPlanDS -- : TherapeuticPlan
 PH -> Patient -- : displayTherapeuticPlan(TherapeuticPlan)
 
-Patient -> PH ++ : manuallySendPhysiologicalData(PhysiologicalData)
+Patient -> PH ++ : sendPhysiologicalData(PhysiologicalData)
 
 PH -> PhysiologicalDataDS ++ : storePhysiologicalData(PhysiologicalData)
 PH <- PhysiologicalDataDS -- : confirmation
