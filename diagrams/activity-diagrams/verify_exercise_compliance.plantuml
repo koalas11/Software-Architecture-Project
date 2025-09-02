@@ -34,6 +34,13 @@ I$num.1: Daily Activity
 :I$num : Daily Activity; <<task>>
 !$num = $num + 1
 
+:A$num Get Therapeutic Plan;
+:\t<<datastore>>
+I$num.1: Therapeutic Plan
+\t{1..*}; <<task>>
+:I$num : Therapeutic Plan; <<task>>
+!$num = $num + 1
+
 :A$num - Verify activity;
 !$num = $num + 1
 if (Activity not compliant) is (yes) then

@@ -17,6 +17,7 @@ skinparam DatabaseBackgroundColor PaleGreen
 participant ExerciseComplianceHandler as ECH
 database PatientDS
 database DailyActivityDS
+database TherapeuticPlanDS
 
 activate ECH
 ECH -> PatientDS ++ : getPatients()
@@ -24,9 +25,11 @@ ECH <- PatientDS -- : patientsList
 
 loop for each patient
   ECH -> DailyActivityDS ++ : getDailyActivityData(Patient)
-  ECH <- DailyActivityDS -- : DailyActivityData
+  ECH <- DailyActivityDS -- : DailyActivityData[]
+  ECH -> TherapeuticPlanDS ++ : getTherapeuticPlan(Patient)
+  ECH <- TherapeuticPlanDS -- : TherapeuticPlan
 
-  ECH -> ECH : verifyExerciseCompliance(DailyActivityData)
+  ECH -> ECH : verifyExerciseCompliance(TherapeuticPlan, DailyActivityData[])
 end
 
 deactivate ECH
