@@ -1,4 +1,19 @@
 @startuml process_data_handler
+
+skinparam sequence {
+ArrowColor Gray
+LifeLineBorderColor Gray
+LifeLineBackgroundColor WhiteSmoke
+
+ActorBorderColor Tomato
+ActorBackgroundColor LightSalmon
+
+ParticipantBackgroundColor PowderBlue
+ParticipantBorderColor CornflowerBlue
+}
+skinparam DatabaseBorderColor SeaGreen
+skinparam DatabaseBackgroundColor PaleGreen
+
 participant PatientHandler as PH
 participant SensorDataHandler as SDH1
 participant SensorDataHandler as SDH2

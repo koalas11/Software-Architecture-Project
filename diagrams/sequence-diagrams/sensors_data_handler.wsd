@@ -1,12 +1,27 @@
-@startuml alerts
+@startuml sensors_data_handler
+
+skinparam sequence {
+ArrowColor Gray
+LifeLineBorderColor Gray
+LifeLineBackgroundColor WhiteSmoke
+
+ActorBorderColor Tomato
+ActorBackgroundColor LightSalmon
+
+ParticipantBackgroundColor PowderBlue
+ParticipantBorderColor CornflowerBlue
+}
+skinparam DatabaseBorderColor SeaGreen
+skinparam DatabaseBackgroundColor PaleGreen
+
 actor PhysiologicalSensor as PS
 actor DailyActivityPlatform as DAP
 participant SensorDataHandler as SDH
+participant ProcessDataHandler as PDH
 participant SensorDataThread as SDT1
 participant SensorDataThread as SDT2
-participant ProcessDataHandler as PDH
-database DailyActivityDS
 database PhysiologicalDataDS
+database DailyActivityDS
 
 
 PS -> SDH : sendPhysiologicalData(PhysiologicalData)
@@ -15,15 +30,15 @@ activate SDH
 SDH -> SDT1 ** : startStorePhysiologicalData(PhysiologicalData)
 activate SDT1
 SDT1 -> PhysiologicalDataDS ++ : storePhysiologicalData(PhysiologicalData)
-SDT1 <- PhysiologicalDataDS --
+SDT1 <- PhysiologicalDataDS -- : confirmation
 
 deactivate SDT1
 
 SDH -> SDT2 ** : startHandlePhysiologicalData(PhysiologicalData)
 activate SDT2
 SDT2 -> PDH ++ : sendToProcessDataHandler(PhysiologicalData)
-deactivate PDH
 deactivate SDT2
+deactivate PDH
 deactivate SDH
 
 DAP -> SDH : sendDailyActivityData(DailyActivityData)
@@ -32,13 +47,13 @@ activate SDH
 SDH -> SDT1 ** : startStoreDailyActivityData(DailyActivityData)
 activate SDT1
 SDT1 -> DailyActivityDS ++ : storeDailyActivityData(DailyActivityData)
-SDT1 <- DailyActivityDS --
+SDT1 <- DailyActivityDS -- : confirmation
 
 deactivate SDT1
 
 SDH -> SDT2 ** : startHandleDailyActivityData(DailyActivityData)
 activate SDT2
 SDT2 -> PDH ++ : sendToProcessDataHandler(DailyActivityData)
-deactivate PDH
 deactivate SDT2
+deactivate PDH
 deactivate SDH

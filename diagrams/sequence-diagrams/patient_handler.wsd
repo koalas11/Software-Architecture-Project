@@ -1,4 +1,19 @@
-@startuml alerts
+@startuml patient_handler
+
+skinparam sequence {
+ArrowColor Gray
+LifeLineBorderColor Gray
+LifeLineBackgroundColor WhiteSmoke
+
+ActorBorderColor Tomato
+ActorBackgroundColor LightSalmon
+
+ParticipantBackgroundColor PowderBlue
+ParticipantBorderColor CornflowerBlue
+}
+skinparam DatabaseBorderColor SeaGreen
+skinparam DatabaseBackgroundColor PaleGreen
+
 actor Patient
 participant PatientHandler as PH
 database TherapeuticPlanDS

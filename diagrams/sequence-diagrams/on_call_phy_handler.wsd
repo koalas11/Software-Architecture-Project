@@ -1,4 +1,19 @@
-@startuml alerts
+@startuml on_call_phy_handler
+
+skinparam sequence {
+ArrowColor Gray
+LifeLineBorderColor Gray
+LifeLineBackgroundColor WhiteSmoke
+
+ActorBorderColor Tomato
+ActorBackgroundColor LightSalmon
+
+ParticipantBackgroundColor PowderBlue
+ParticipantBorderColor CornflowerBlue
+}
+skinparam DatabaseBorderColor SeaGreen
+skinparam DatabaseBackgroundColor PaleGreen
+
 actor OnCallPhysician
 participant OnCallPhysicianHandler as PH
 database PatientDataDS

@@ -1,6 +1,21 @@
-@startuml alerts
-actor AttendingPhysician
+@startuml attending_phy_handler
+
+skinparam sequence {
+ArrowColor Gray
+LifeLineBorderColor Gray
+LifeLineBackgroundColor WhiteSmoke
+
+ActorBorderColor Tomato
+ActorBackgroundColor LightSalmon
+
+ParticipantBackgroundColor PowderBlue
+ParticipantBorderColor CornflowerBlue
+}
+skinparam DatabaseBorderColor SeaGreen
+skinparam DatabaseBackgroundColor PaleGreen
+
 actor PhysiologicalSensor as PS
+actor AttendingPhysician
 participant AttendingPhysicianHandler as APH
 database MedicalRecordDS
 database ThresholdAlertDS

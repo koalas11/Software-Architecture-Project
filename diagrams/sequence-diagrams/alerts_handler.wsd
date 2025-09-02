@@ -1,6 +1,21 @@
-@startuml alerts
-actor Ambulance
+@startuml alerts_handler
+
+skinparam sequence {
+ArrowColor Gray
+LifeLineBorderColor Gray
+LifeLineBackgroundColor WhiteSmoke
+
+ActorBorderColor Tomato
+ActorBackgroundColor LightSalmon
+
+ParticipantBackgroundColor PowderBlue
+ParticipantBorderColor CornflowerBlue
+}
+skinparam DatabaseBorderColor SeaGreen
+skinparam DatabaseBackgroundColor PaleGreen
+
 actor Hospital
+actor Ambulance
 actor OnCallPhysician
 actor AttendingPhysician
 participant ProcessDataHandler as PDH1
@@ -12,12 +27,12 @@ participant AlertsHandlerThread as AH2
 participant AlertsHandlerThread as AH3
 participant AlertsHandlerThread as AH4
 database AddressDS
-database AttendingPhysicianDS
-database OnCallPhysicianDS
 database HospitalDS
-database HealthCareFacilityDS
-database MedicalRecordDS
 database AmbulanceDS
+database HealthCareFacilityDS
+database OnCallPhysicianDS
+database MedicalRecordDS
+database AttendingPhysicianDS
 
 activate PDH1
 PDH1 -> AH : sendIdentifyHospitalAndAmbulance(Patient)
