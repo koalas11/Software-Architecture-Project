@@ -14,6 +14,8 @@ skinparam sequence {
 skinparam DatabaseBorderColor SeaGreen
 skinparam DatabaseBackgroundColor PaleGreen
 
+hide footbox
+
 actor PhysiologicalSensor as PS
 actor AttendingPhysician
 participant AttendingPhysicianHandler as APH

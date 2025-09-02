@@ -33,6 +33,9 @@ end fork
 I$num.1 : PatientData
 \t{1..*}; <<task>>
 
+:\t<<datastore>>\n I$num.2 : Therapeutic Plan\n{1..*}; <<datastore>> <<task>>
+:I$num : Therapeutic Plan; <<data>> <<task>>
+
 :\t<<datastore>>\n I$num.3 : Medical Record\n{1..*}; <<datastore>> <<task>>
 :I$num : Medical Record; <<data>> <<task>>
 

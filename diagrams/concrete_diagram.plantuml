@@ -1,51 +1,60 @@
 @startuml concrete_diagram
 
+!pragma layout elk
+
 skinparam ClassBorderColor CornflowerBlue
 skinparam ClassBackgroundColor PowderBlue
 
-class "<<Sequential>> Sensors and Data Handler" as C1 {
-  <<Async, Push>>
-  + pushPhysiologicalData(PhysiologicalData): void
-  + pushDailyActivityData(DailyActivityData): void
-}
+together {
+  class "<<Sequential>> Sensors and Data Handler" as C1 {
+    <<Async, Push>>
+    + pushPhysiologicalData(PhysiologicalData): void
+    + pushDailyActivityData(DailyActivityData): void
+  }
 
-class "<<Concurrent>> Alerts Handler" as C2 {
-  +identifyHospitalAndAmbulance(Patient)
-  +identifyOnCallPhysician(Patient)
-  -sendHospitalAlert(Hospital)
-  -sendAmbulanceAlert(Ambulance, Address)
-  -notifyOnCallPhysician(OnCallPhysician, Anomaly)
-  +sendThresholdAlert(AttendingPhysician, Threshold)
-}
+  class "<<Concurrent>> Alerts Handler" as C2 {
+    +identifyHospitalAndAmbulance(Patient): void
+    +identifyOnCallPhysician(Patient): void
+    -sendHospitalAlert(Hospital): void
+    -sendAmbulanceAlert(Ambulance, Address): void
+    -notifyOnCallPhysician(OnCallPhysician, Anomaly): void
+    +sendThresholdAlert(Patient, Threshold): void
+  }
 
-class "<<Sequential>> Patient Handler" as C3 {
-  +sendPhysiologicalData(PhysiologicalData)
-  +viewTherapeuticPlan(Patient) <<Sync, Pull>>
+  class "<<Sequential>> Patient Handler" as C3 {
+    +sendPhysiologicalData(PhysiologicalData): void
+    +viewTherapeuticPlan(Patient): TherapeuticPlan <<Sync, Pull>>
+  }
+
+  class "<<Concurrent>> Patient Data Handler" as C6 {
+    <<Async, Push>>
+    +processPatientData(PhysiologicalData): void
+    +processSensorsData(PhysiologicalData): void
+    +processDailyActivityData(DailiActivityData): void
+    -startProcessPatientData(Patient, PatientData): void
+  }
+
+  class "<<OneShot>> Verify Exercise Compliance Handler" as C7 {
+    +verifyExerciseCompliance(): void
+  }
 }
 
 class "<<Sequential>> On Call Physician Handler" as C4 {
-  +sendDiagnosticInformation(DiagnosticInformation)
-  +sendPatientHealthInfo(PatientHealthInfo)
+  +sendDiagnosticInformation(DiagnosticInformation): void
+  +sendPatientHealthInfo(PatientHealthInfo): void
 }
 
 class "<<Sequential>> Attending Physician Handler" as C5 {
-  -configureSensorFrequencies(Frequency[]) <<Async, Push>>
-  +defineTherapeuticPlan(Patient, TherapeuticPlan)
-  +modifyTherapeuticPlan(Patient, TherapeuticPlan)
-  +viewPatientMedicalRecord(Patient)
-  +confirmPhoneCallTowardsPatient(Patient, Anomaly)
+  -configureSensorFrequencies(Frequency[]): void <<Async, Push>>
+  +defineTherapeuticPlan(Patient, TherapeuticPlan): void
+  +modifyTherapeuticPlan(Patient, TherapeuticPlan): void
+  +viewPatientMedicalRecord(Patient): MedicalRecord
+  +confirmPhoneCallTowardsPatient(Patient, Anomaly): void
 }
 
-class "<<Concurrent>> Patient Data Handler" as C6 {
-  <<Async, Push>>
-  +processPatientData(Patient, PatientData)
-  +processSensorsData(PhysiologicalData)
-  +processDailyActivityData(DailiActivityData)
-}
-
-class "<<OneShot>> Verify Exercise Compliance Handler" as C7 {
-  +verifyExerciseCompliance()
-}
+C1 -> C6
+C6 -> C2
+C3 -> C6
+C7 -> C2
 
 @enduml
- 

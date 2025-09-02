@@ -14,7 +14,10 @@ skinparam sequence {
 skinparam DatabaseBorderColor SeaGreen
 skinparam DatabaseBackgroundColor PaleGreen
 
+hide footbox
+
 participant ExerciseComplianceHandler as ECH
+participant AlertHandler as AH
 database PatientDS
 database DailyActivityDS
 database TherapeuticPlanDS
@@ -30,6 +33,12 @@ loop for each patient
   ECH <- TherapeuticPlanDS -- : TherapeuticPlan
 
   ECH -> ECH : verifyExerciseCompliance(TherapeuticPlan, DailyActivityData[])
+  activate ECH
+  alt (is threshold exceeded)
+    ECH -> AH ++ : sendThresholdAlert(Patient, Threshold)
+    deactivate AH
+  end
+  deactivate ECH
 end
 
 deactivate ECH

@@ -14,11 +14,13 @@ skinparam sequence {
 skinparam DatabaseBorderColor SeaGreen
 skinparam DatabaseBackgroundColor PaleGreen
 
+hide footbox
+
 actor Patient
 participant PatientHandler as PH
 database TherapeuticPlanDS
 database PhysiologicalDataDS
-participant ProcessDataHandler as PDH
+participant PatientDataHandler as PDH
 
 Patient -> PH ++ : viewTherapeuticPlan()
 PH -> TherapeuticPlanDS ++ : getTherapeuticPlan(patientId)
@@ -30,6 +32,6 @@ Patient -> PH ++ : sendPhysiologicalData(PhysiologicalData)
 PH -> PhysiologicalDataDS ++ : storePhysiologicalData(PhysiologicalData)
 PH <- PhysiologicalDataDS -- : confirmation
 
-PH -> PDH ++ : sendToProcessDataHandler(PhysiologicalData)
+PH -> PDH ++ : sendToPatientDataHandler(PhysiologicalData)
 deactivate PDH
 Patient <- PH -- : confirmation

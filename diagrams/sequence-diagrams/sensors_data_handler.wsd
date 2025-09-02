@@ -14,10 +14,12 @@ skinparam sequence {
 skinparam DatabaseBorderColor SeaGreen
 skinparam DatabaseBackgroundColor PaleGreen
 
+hide footbox
+
 actor PhysiologicalSensor as PS
 actor DailyActivityPlatform as DAP
 participant SensorDataHandler as SDH
-participant ProcessDataHandler as PDH
+participant PatientDataHandler as PDH
 participant SensorDataThread as SDT1
 participant SensorDataThread as SDT2
 database PhysiologicalDataDS
@@ -32,12 +34,12 @@ activate SDT1
 SDT1 -> PhysiologicalDataDS ++ : storePhysiologicalData(PhysiologicalData)
 SDT1 <- PhysiologicalDataDS -- : confirmation
 
-deactivate SDT1
+destroy SDT1
 
 SDH -> SDT2 ** : startHandlePhysiologicalData(PhysiologicalData)
 activate SDT2
-SDT2 -> PDH ++ : sendToProcessDataHandler(PhysiologicalData)
-deactivate SDT2
+SDT2 -> PDH ++ : sendToPatientDataHandler(PhysiologicalData)
+destroy SDT2
 deactivate PDH
 deactivate SDH
 
@@ -49,11 +51,11 @@ activate SDT1
 SDT1 -> DailyActivityDS ++ : storeDailyActivityData(DailyActivityData)
 SDT1 <- DailyActivityDS -- : confirmation
 
-deactivate SDT1
+destroy SDT1
 
 SDH -> SDT2 ** : startHandleDailyActivityData(DailyActivityData)
 activate SDT2
-SDT2 -> PDH ++ : sendToProcessDataHandler(DailyActivityData)
-deactivate SDT2
+SDT2 -> PDH ++ : sendToPatientDataHandler(DailyActivityData)
+destroy SDT2
 deactivate PDH
 deactivate SDH

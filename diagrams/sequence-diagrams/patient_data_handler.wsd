@@ -14,20 +14,23 @@ skinparam sequence {
 skinparam DatabaseBorderColor SeaGreen
 skinparam DatabaseBackgroundColor PaleGreen
 
+hide footbox
+
 participant PatientHandler as PH
 participant SensorDataHandler as SDH1
 participant SensorDataHandler as SDH2
-participant ProcessDataHandler as PDH
+participant PatientDataHandler as PDH
 participant AlertsHandler as AH
-participant ProcessDataHandlerThread as PDH1
-participant ProcessDataHandlerThread as PDH2
-participant ProcessDataHandlerThread as PDH3
+participant PatientDataHandlerThread as PDH1
+participant PatientDataHandlerThread as PDH2
+participant PatientDataHandlerThread as PDH3
 database MedicalRecordDS
 
-PH -> PDH ++ : processPatientData(Patient, PhysiologicalData)
+PH -> PDH ++ : processPatientData(PhysiologicalData)
 PDH -> PDH1 ** : startProcessPatientData(Patient, PhysiologicalData)
 deactivate PDH
 PDH1 -> MedicalRecordDS ++ : getMedicalRecord(Patient)
+activate PDH1
 PDH1 <- MedicalRecordDS -- : MedicalRecord
 
 alt RedCode detected
@@ -40,11 +43,14 @@ else Threshold exceeded
 PDH1 -> AH ++ : sendThresholdAlertAndPatientNumber(Patient, TherapeuticPlan, Threshold)
 deactivate AH
 end
+destroy PDH1
+
 
 SDH1 -> PDH ++ : processPatientData(PhysiologicalData)
 PDH -> PDH2 ** : startProcessPatientData(Patient, PhysiologicalData)
 deactivate PDH
 PDH2 -> MedicalRecordDS ++ : getMedicalRecord(Patient)
+activate PDH2
 PDH2 <- MedicalRecordDS -- : MedicalRecord
 
 alt RedCode detected
@@ -57,11 +63,13 @@ else Threshold exceeded
 PDH2 -> AH ++ : sendThresholdAlertAndPatientNumber(Patient, TherapeuticPlan, Threshold)
 deactivate AH
 end
+destroy PDH2
 
 SDH2 -> PDH ++ : processPatientData(DailyActivityData)
-PDH -> PDH3 ** : startProcessPatientData(Patient, PhysiologicalData)
+PDH -> PDH3 ** : startProcessPatientData(Patient, DailyActivityData)
 deactivate PDH
 PDH3 -> MedicalRecordDS ++ : getMedicalRecord(Patient)
+activate PDH3
 PDH3 <- MedicalRecordDS -- : MedicalRecord
 
 alt RedCode detected
@@ -74,6 +82,7 @@ else Threshold exceeded
 PDH3 -> AH ++ : sendThresholdAlertAndPatientNumber(Patient, TherapeuticPlan, Threshold)
 deactivate AH
 end
+destroy PDH3
 
 deactivate PDH
 
