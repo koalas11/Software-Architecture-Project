@@ -12,7 +12,6 @@ class "<<Sequential>> Sensors and Data Handler" as C1 {
 class "<<Concurrent>> Alerts Handler" as C2 {
   +identifyHospitalAndAmbulance(Patient)
   +identifyOnCallPhysician(Patient)
-  <<Async>>
   -sendHospitalAlert(Hospital)
   -sendAmbulanceAlert(Ambulance, Address)
   -notifyOnCallPhysician(OnCallPhysician, Anomaly)
@@ -49,3 +48,4 @@ class "<<OneShot>> Verify Exercise Compliance Handler" as C7 {
 }
 
 @enduml
+ 
