@@ -20,6 +20,7 @@ node "<<device>>\n(N) On Call Physician" as On_Call_Physician_1_1
 
 frame Hospital_1 {
     component "Alerts Handler" as AH1
+    component "Alerts Handler Hot Spare" as AH1B
     component "Attending Physician Handler" as APH1
     component "On Call Physician Handler" as OCPH1
 
@@ -32,17 +33,17 @@ frame Hospital_1 {
     VECH1 --> DS1 : <<use>>
 }
 
-frame Edge_1_1 {
+frame Edge_1 {
     component "Sensors and Data Handler" as SDH1
     component "Patient Handler" as PH1
 }
 
-frame Edge_1_2 {
+frame Edge_2 {
     component "Sensors and Data Handler" as SDH2
     component "Patient Handler" as PH2
 }
 
-frame Edge_1_N {
+frame Edge_N {
     component "Sensors and Data Handler" as SDH3
     component "Patient Handler" as PH3
 }
@@ -53,12 +54,12 @@ together {
     node "<<device>>\n(N) Patient" as Patient_1_1
 
 
-    Sensor_1_1 -> Edge_1_1 : HTTPS
-    DAP_1_1 -> Edge_1_1 : HTTPS
-    Patient_1_1 -> Edge_1_1 : HTTPS
+    Sensor_1_1 -> Edge_1 : HTTPS
+    DAP_1_1 -> Edge_1 : HTTPS
+    Patient_1_1 -> Edge_1 : HTTPS
 }
 
-Edge_1_1 -> Hospital_1 : HTTPS
+Edge_1 -> Hospital_1 : HTTPS
 
 Attending_Physician_1_1 --> Hospital_1 : VPN+HTTPS
 On_Call_Physician_1_1 --> Hospital_1 : VPN+HTTPS
@@ -69,6 +70,7 @@ node "<<device>>\n(N) On Call Physician" as On_Call_Physician_1_2
 
 frame Hospital_N {
     component "Alerts Handler" as AH2
+    component "Alerts Handler Hot Spare" as AH2B
     component "Attending Physician Handler" as APH2
     component "On Call Physician Handler" as OCPH2
 
@@ -90,19 +92,19 @@ node "<<device>>\n(N) Sensor" as Sensor_1_2
 node "<<device>>\n(N) Daily Activity Platform" as DAP_1_2
 node "<<device>>\n(N) Patient" as Patient_1_2
 
-Sensor_1_2 -> Edge_1_2 : HTTPS
-DAP_1_2 -> Edge_1_2 : HTTPS
-Patient_1_2 -> Edge_1_2 : HTTPS
+Sensor_1_2 -> Edge_2 : HTTPS
+DAP_1_2 -> Edge_2 : HTTPS
+Patient_1_2 -> Edge_2 : HTTPS
 
 node "<<device>>\n(N) Sensor" as Sensor_1_3
 node "<<device>>\n(N) Daily Activity Platform" as DAP_1_3
 node "<<device>>\n(N) Patient" as Patient_1_3
 
-Sensor_1_3 -> Edge_1_N : HTTPS
-DAP_1_3 -> Edge_1_N : HTTPS
-Patient_1_3 -> Edge_1_N : HTTPS
+Sensor_1_3 -> Edge_N : HTTPS
+DAP_1_3 -> Edge_N : HTTPS
+Patient_1_3 -> Edge_N : HTTPS
 
-Edge_1_2 -> Hospital_N : HTTPS
-Edge_1_N -> Hospital_N : HTTPS
+Edge_2 -> Hospital_N : HTTPS
+Edge_N -> Hospital_N : HTTPS
 
 @enduml

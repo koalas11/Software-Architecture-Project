@@ -2,8 +2,8 @@
 
 !pragma layout elk
 
-skinparam ClassBorderColor CornflowerBlue
-skinparam ClassBackgroundColor PowderBlue
+skinparam ClassBorderColor #B85450
+skinparam ClassBackgroundColor #F8CECC
 
 together {
   class "<<Sequential>> Sensors and Data Handler" as C1 {
