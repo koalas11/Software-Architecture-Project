@@ -36,8 +36,6 @@ start
 !$num = $num + 1
 
 if (Updated Physiological Sensor Frequencies?) is (yes) then
-  :\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>> <<buffer>>
-
   :A$num Update Sensor Frequencies;
   !$num = $num + 1
 else (no)

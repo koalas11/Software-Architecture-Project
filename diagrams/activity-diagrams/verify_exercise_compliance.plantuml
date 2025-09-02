@@ -38,7 +38,7 @@ I$num.1: Daily Activity
 !$num = $num + 1
 if (Activity not compliant) is (yes) then
   :I$num : ThresholdAlert; <<task>>
-  :A$num - Send threshold alarm; <<output>>
+  :A$num - Send threshold Alert; <<output>>
 else (no)
 endif
 

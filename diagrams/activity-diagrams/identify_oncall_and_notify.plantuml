@@ -47,7 +47,7 @@ fork again
 
   :I$num : AnomalyAlert; <<task>>
 
-  :A$num - Notify with address and medical record;
+  :A$num - Notify with address and medical record; <<output>>
 
 
   stop

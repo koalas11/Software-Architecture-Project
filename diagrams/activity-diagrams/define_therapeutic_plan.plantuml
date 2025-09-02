@@ -17,8 +17,6 @@ start
 :I$num : Therapeutic Plan; <<task>>
 !$num = $num + 1
 
-:\t<<buffer>>\n I$num.2 : Physiological Sensor Frequency\n{1..*}; <<task>>
-
 :A$num Update Sensor Frequencies;
 !$num = $num + 1
 :A$num - Store Therapeutic Plan;

@@ -17,7 +17,7 @@ end note
 ' trovare medical record del paziente (ricevero il paziente da handleData)
 
 start
-:A$num - Identify On-Call Physician; <<acceptEvent>>
+:A$num - Send Threshold Alert; <<acceptEvent>>
 :I$num : Patient; <<task>>
 !$num = $num + 1
 :I$num : Threshold; <<task>>
@@ -30,7 +30,7 @@ start
 
 :I$num : ThresholdAlert; <<task>>
 
-:A$num - Notify Attending Physician with Patient Number;
+:A$num - Notify Attending Physician with Patient Number; <<output>>
 
 
 stop
