@@ -6,13 +6,13 @@ left to right direction
 ' Primary Actors
 actor Patient #87CEEB
 actor "Attending Physician" as AttendingPhysician #90EE90
-actor "On-Call Physician" as OnCallPhysician #FFB6C1
+actor "On-Call Physician" as OnCallPhysician #FFE4FF
 
 ' Secondary Actors
 actor "Physiological Sensor" as PhysiologicalSensors #D3D3D3
 actor "Daily Activity Tracking Platform" as DailyActivityTrackingPlatform #D3D3D3
 actor "Ambulance" as Emergency #FF6B6B
-actor "Hospital" as Hospital #FFB6C1
+actor "Hospital" as Hospital #FF6B6B
 
 ' Actor position notes
 note bottom of Patient : <<location>>\nAddress
@@ -62,12 +62,12 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   
   OnCallPhysician <-- (Send Patient Address and Medical Record)
 
-    (Identify Ambulance and Hospital) #FFE4E1
+    (Identify Ambulance and Hospital) #ee9494
 
   together {
     ' Emergency Services Use Cases
-    (Send Emergency Alert To Ambulance) #FFE4E1
-    (Send Emergency Alert To Hospital) #FFE4E1
+    (Send Emergency Alert To Ambulance) #ee9494
+    (Send Emergency Alert To Hospital) #ee9494
 
     ' Sensor Use Cases
     (Acquire Daily Activity Data) #F0F0F0
@@ -91,7 +91,7 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   ' System Internal Relationships
   (Send Physiological Data) ..> MainSystemCase : <<includes>>
   MainSystemCase <..  (Acquire Physiological Data) : <<includes>>
-  (Send Threshold Alerts and Patient Number) ..> MainSystemCase: <<extends>>\n[Threshold Exceeded]
+  (Send Threshold Alerts and Patient Number) ..> MainSystemCase: <<extends>>\n[Threshold Violation]
   (Identify On-Call Physician) ..> MainSystemCase : <<extends>>\n[Anomaly Detected]
   MainSystemCase <..  (Identify Ambulance and Hospital) : <<extends>>\n[Red Code]
   (Identify Ambulance and Hospital) ..>  (Send Emergency Alert To Ambulance) : <<include>>
@@ -107,11 +107,13 @@ rectangle "Remote Health Monitoring and Telerehabilitation System" as System #F5
   ' Explanatory notes for key system features
   note bottom of MainSystemCase : Process Patient Data to store the data and check\n for anomalies, trigger alerts \nand red code emergencies
 
-  (Verify Exercise Compliance) #E6FFE6
+  (Verify Exercise Compliance) #FFE4E1
 
   (Verify Exercise Compliance) <.. (Send Threshold Alerts and Patient Number) : <<extends>>\n[Activity Not Compliant]
 
   note top of (Verify Exercise Compliance) : <<note>>\nPerformed at end of each day
+
+  (Update Sensors Frequencies) #E6FFE6 
 
   (Modify Therapeutic Plan) <.. (Update Sensors Frequencies) : <<extends>>\n[Modified Frequencies]
   (Define Therapeutic Plan) ..> (Update Sensors Frequencies) : <<includes>>

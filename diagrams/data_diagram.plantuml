@@ -1,8 +1,8 @@
 @startuml data_diagram
 
-skinparam ClassBorderColor CornflowerBlue
-skinparam ClassBackgroundColor PowderBlue
-
+skinparam ClassBorderColor #B85450
+skinparam ClassBackgroundColor #F8CECC
+left to right direction
 !pragma layout elk
 ' Class diagram for the problem architecture (WHAT)
 
@@ -38,26 +38,26 @@ class Physician {
   +contactInfo
 }
 
-class AttendingPhysician {}
+class "Attending Physician" as AttendingPhysician {}
 
-class OnCallPhysician {}
+class "On-Call Physician" as OnCallPhysician {}
 
-class HealthcareFacility {
+class "Healthcare Facility" as HealthcareFacility {
   +name
   +location
 }
 
-class Hospital {}
+class "Hospital" as Hospital {}
 
-class Ambulance {}
+class "Ambulance" as Ambulance {}
 
-class Alert {}
+class "Alert" as Alert {}
 
-class RedTypeAlert {}
+class "Red Type Alert" as RedTypeAlert {}
 
-class AnomalyDetectedAlert {}
+class "Anomaly Detected Alert" as AnomalyDetectedAlert {}
 
-class ThresholdAlert {
+class "Threshold Alert" as ThresholdAlert {
   + patientCallConfirmation
 }
 
@@ -128,5 +128,14 @@ Alert "*" -- "1" Patient
 
 Threshold "1" -- "1" ThresholdAlert
 
+
+note right of PatientData
+Represent various types of patient 
+data along with their historical records
+<<size>>
+tenth of bytes
+<<precision>>
+strong
+end note
 
 @enduml
